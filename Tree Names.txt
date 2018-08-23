@@ -1,0 +1,22 @@
+Alder
+Ash
+Aspen
+Birch
+Buckeye
+Catalpa
+Cedar
+Cottonwood
+Eucalypt
+Fir
+Hemlock
+Larch
+Magnolia
+Maple
+Oak
+Pine
+Red cedar
+Spruce
+Tilia
+Tupelo
+Wattle
+Willow
