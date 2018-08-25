@@ -2,31 +2,33 @@
 
 import logging
 from icrawler.builtin import BingImageCrawler,GoogleImageCrawler
-from urllib.request import urlopen
+from urllib.request import Request, urlopen
 import re
+from bs4 import BeautifulSoup
+from PIL import Image
+from resizeimage import resizeimage
+# open file
+import os
 
 MAX_DOWNLOAD_NUMBER = 1000
-SEARCH_TYPE = ' leaf'
-
+SEARCH_TYPE = ' tree'
+ROOT_DIR = os.path.dirname(os.path.abspath(__file__))
 # get tree type name
 
 
 list_of_tree_type = []
 
-for i in range(1, 11):
-    if i == 1:
-        page_number = ''
-    else:
-        page_number = i
+req = Request("http://www.johnfrenchlandscapes.com.au/common-trees-in-melbourne/", headers={'User-Agent': 'Mozilla/5.0'})
+html = urlopen(req).read()
+soup = BeautifulSoup(html,features='lxml')
 
-    url = "http://www.allcreativedesigns.com.au/pages/galltrees" + str(page_number) + '.html'
-    html = urlopen(url).read().decode('cp1252')
+# # get tree type
+type = soup.find('div',attrs={"class":"post-box"}).findAll('p')
+for all_p in type:
+    if all_p.find('strong') != None:
+        list_of_tree_type.append(all_p.find('strong').text)
 
-    tree_type = re.findall(r"<h5>(.+?)</h5>", html)
-    # get tree type
-    for each_tree_type in tree_type:
-        final_tree_type = re.sub(r'<em>|</em>|&nbsp;', "", each_tree_type)
-        list_of_tree_type.append(final_tree_type)
+
 
 
 
@@ -55,8 +57,24 @@ def run_bing(search_keyword):
     bing_crawler.crawl(keyword= search_keyword + SEARCH_TYPE, max_num=MAX_DOWNLOAD_NUMBER)
 
 # image process
+def image_process():
+    path = os.path.join(ROOT_DIR, 'images/Training Data')
+    dictionarys= os.listdir(path)
 
-
+    for each_folder in dictionarys:
+        if not os.path.isdir(each_folder) and each_folder in list_of_tree_type:
+            # list all tree pic in a folder
+            tree_pics = os.listdir(path + "/" + each_folder)
+            for each_pic in tree_pics:
+                pic_path = path + "/" + each_folder + '/' + each_pic
+                with open(pic_path, 'r+b') as pic:
+                    with Image.open(pic) as image:
+                        try:
+                            cover = resizeimage.resize_cover(image, [250, 250])
+                            cover.save(pic_path, image.format)
+                        except:
+                            print('size incorract')
+                            continue
 
 
 
@@ -65,7 +83,9 @@ def main():
     for each_tree in list_of_tree_type:
         run_bing(each_tree)
 
-    print("We have find " + str(len(list_of_tree_type)) + "type of Tree In Australia")
+    # image process
+    image_process()
+    print("We have find " + str(len(list_of_tree_type)) + " type of Tree In Australia")
 
 
 if __name__ == '__main__':
