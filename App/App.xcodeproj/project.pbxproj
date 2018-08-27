@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		372666B6212EE44500F98ACA /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 372666B5212EE44400F98ACA /* GoogleService-Info.plist */; };
+		372666BA2133C55600F98ACA /* RequirementViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 372666B92133C55600F98ACA /* RequirementViewController.swift */; };
 		37331A2D212E931C0007AD4B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37331A2C212E931C0007AD4B /* AppDelegate.swift */; };
 		37331A2F212E931C0007AD4B /* FirstViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37331A2E212E931C0007AD4B /* FirstViewController.swift */; };
 		37331A31212E931C0007AD4B /* SecondViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37331A30212E931C0007AD4B /* SecondViewController.swift */; };
@@ -19,6 +20,7 @@
 
 /* Begin PBXFileReference section */
 		372666B5212EE44400F98ACA /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		372666B92133C55600F98ACA /* RequirementViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequirementViewController.swift; sourceTree = "<group>"; };
 		37331A29212E931C0007AD4B /* App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = App.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		37331A2C212E931C0007AD4B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		37331A2E212E931C0007AD4B /* FirstViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstViewController.swift; sourceTree = "<group>"; };
@@ -73,6 +75,7 @@
 				37331A35212E931D0007AD4B /* Assets.xcassets */,
 				37331A37212E931D0007AD4B /* LaunchScreen.storyboard */,
 				37331A3A212E931D0007AD4B /* Info.plist */,
+				372666B92133C55600F98ACA /* RequirementViewController.swift */,
 			);
 			path = App;
 			sourceTree = "<group>";
@@ -240,6 +243,7 @@
 			files = (
 				37331A31212E931C0007AD4B /* SecondViewController.swift in Sources */,
 				37331A2D212E931C0007AD4B /* AppDelegate.swift in Sources */,
+				372666BA2133C55600F98ACA /* RequirementViewController.swift in Sources */,
 				37331A2F212E931C0007AD4B /* FirstViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

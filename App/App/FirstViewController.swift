@@ -19,21 +19,21 @@ class FirstViewController: UIViewController, UIImagePickerControllerDelegate, UI
     @IBOutlet weak var imageView4: UIImageView!
     @IBOutlet weak var reqButton: UIButton!
     @IBOutlet weak var processButton: UIButton!
-    @IBOutlet weak var stackView: UIStackView!
+    @IBOutlet weak var startOverButton: UIButton!
     
     /// Firebase vision instance.
     lazy var vision = Vision.vision()
     
-    /// A dictionary holding current results from detection.
+    /// A dictionary holding current results of object detection.
     var results = Dictionary<String, Any>()
     
-    /// Image picker
+    /// Image picker.
     let imagePickerController = UIImagePickerController()
     
-    /// No. of photos supplied
+    /// No. of photos already supplied.
     var currentPhotoNum = 0
     
-    /// ID of the tapped image view
+    /// ID of the currently tapped image view.
     var tappedImageViewId = 0
     
     // MARK: - UIViewController
@@ -41,38 +41,58 @@ class FirstViewController: UIViewController, UIImagePickerControllerDelegate, UI
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        /// Tap geture on images
-//        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(imageTapped(tapGestureRecognizer:)))
-//        imageView1.isUserInteractionEnabled = true
-//        imageView1.addGestureRecognizer(tapGestureRecognizer)
-//
-//        imagePickerController.delegate = self
-    }
-    
-    func updateStatus() {
-    
+        /// Tap geture on images.
+        addRecognizer()
+
+        /// Delegate.
+        imagePickerController.delegate = self
     }
     
     // MARK: - IBActions
-
-    @objc func imageTapped(tapGestureRecognizer: UITapGestureRecognizer)
+    
+    @objc func image1Tapped(tapGestureRecognizer: UITapGestureRecognizer)
     {
-        let tappedImageView = tapGestureRecognizer.view as! UIImageView
-        
-        switch tappedImageView {
-        case imageView1:
-            
-            tappedImageViewId = 1
-            if currentPhotoNum == 0 {
-                chooseImage()
-            }
-        
-        default:
-            return
+        tappedImageViewId = 1
+        if currentPhotoNum < 1 {
+            chooseImage()
+        } else {
+            showOptions()
         }
     }
     
+    @objc func image2Tapped(tapGestureRecognizer: UITapGestureRecognizer)
+    {
+        tappedImageViewId = 2
+        if currentPhotoNum < 2 {
+            chooseImage()
+        } else {
+            showOptions()
+        }
+    }
+    
+    @IBAction func processPhotos(_ sender: Any) {
+        let alert = UIAlertController(title: "Results", message: "The photos indicate that Sicong Ma is a relative SB.", preferredStyle: .alert)
+        
+        alert.addAction(UIAlertAction(title: "Indeed", style: .default, handler: nil))
+        alert.addAction(UIAlertAction(title: "You are right", style: .default, handler: nil))
+        
+        present(alert, animated: true, completion: nil)
+    }
+    
     // MARK: - Privates
+    
+    private func addRecognizer() {
+        imageView1.isUserInteractionEnabled = true
+        imageView2.isUserInteractionEnabled = true
+        imageView3.isUserInteractionEnabled = true
+        imageView4.isUserInteractionEnabled = true
+        
+        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(image1Tapped(tapGestureRecognizer:)))
+        imageView1.addGestureRecognizer(tapGestureRecognizer)
+        
+        let tapGestureRecognizer2 = UITapGestureRecognizer(target: self, action: #selector(image2Tapped(tapGestureRecognizer:)))
+        imageView2.addGestureRecognizer(tapGestureRecognizer2)
+    }
     
     private func chooseImage() {
         let actionSheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
@@ -97,26 +117,88 @@ class FirstViewController: UIViewController, UIImagePickerControllerDelegate, UI
         present(actionSheet, animated: true, completion: nil)
     }
     
-    private func addImageView(id: Int) {
-//        switch id {
-//        case 2:
-//
-//        default:
-//            return
-//        }
+    private func showOptions() {
+        let actionSheet = UIAlertController(title: "Choose Action", message: nil, preferredStyle: .actionSheet)
+        
+        actionSheet.addAction(UIAlertAction(title: "Change Photo", style: .default, handler: { (action: UIAlertAction)
+            in
+            
+            self.chooseImage()
+        }))
+        
+        actionSheet.addAction(UIAlertAction(title: "Save to Library", style: .default, handler: { (action: UIAlertAction)
+            in
+            
+            self.savePhoto()
+        }))
+        
+        actionSheet.addAction(UIAlertAction(title: "Remove Photo", style: .destructive, handler: { (action: UIAlertAction)
+            in
+            
+            self.removePhoto()
+        }))
+        
+        actionSheet.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        
+        present(actionSheet, animated: true, completion: nil)
     }
-
+    
+    private func savePhoto() {
+        
+    }
+    
+    private func removePhoto() {
+        
+    }
+    
+    private func addBorder(view: UIImageView) {
+        view.layer.borderWidth = 10
+        view.layer.borderColor = UIColor.black.cgColor
+    }
+    
     // MARK: - Delegates
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
         let image = info[UIImagePickerControllerOriginalImage] as! UIImage
+        processButton.isHidden = false
+        startOverButton.isHidden = false
         
         switch tappedImageViewId {
         case 1:
-            imageView1.layer.borderWidth = 10
-            imageView1.layer.borderColor = UIColor.black.cgColor
+            
             imageView1.image = image
-            addImageView(id: 2)
+            if currentPhotoNum < 1 {
+                addBorder(view: imageView1)
+                currentPhotoNum = 1
+                imageView2.isHidden = false
+            }
+            
+        case 2:
+            
+            imageView2.image = image
+            if currentPhotoNum < 2 {
+                addBorder(view: imageView2)
+                currentPhotoNum = 2
+                imageView3.isHidden = false
+            }
+            
+        case 3:
+            
+            imageView3.image = image
+            if currentPhotoNum < 3 {
+                addBorder(view: imageView3)
+                currentPhotoNum = 3
+                imageView4.isHidden = false
+            }
+            
+        case 4:
+            
+            imageView4.image = image
+            if currentPhotoNum < 4 {
+                addBorder(view: imageView3)
+                currentPhotoNum = 4
+            }
+            
         default:
             return
         }
