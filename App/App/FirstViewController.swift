@@ -14,7 +14,11 @@ class FirstViewController: UIViewController, UIImagePickerControllerDelegate, UI
     // MARK: - IBOutlets
     
     @IBOutlet weak var imageView1: UIImageView!
-    @IBOutlet weak var instructionButton: UIButton!
+    @IBOutlet weak var imageView2: UIImageView!
+    @IBOutlet weak var imageView3: UIImageView!
+    @IBOutlet weak var imageView4: UIImageView!
+    @IBOutlet weak var reqButton: UIButton!
+    @IBOutlet weak var processButton: UIButton!
     @IBOutlet weak var stackView: UIStackView!
     
     /// Firebase vision instance.
@@ -38,11 +42,11 @@ class FirstViewController: UIViewController, UIImagePickerControllerDelegate, UI
         super.viewDidLoad()
         
         /// Tap geture on images
-        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(imageTapped(tapGestureRecognizer:)))
-        imageView1.isUserInteractionEnabled = true
-        imageView1.addGestureRecognizer(tapGestureRecognizer)
-        
-        imagePickerController.delegate = self
+//        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(imageTapped(tapGestureRecognizer:)))
+//        imageView1.isUserInteractionEnabled = true
+//        imageView1.addGestureRecognizer(tapGestureRecognizer)
+//
+//        imagePickerController.delegate = self
     }
     
     func updateStatus() {
