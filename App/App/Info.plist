@@ -3,11 +3,13 @@
 <plist version="1.0">
 <dict>
 	<key>NSCameraUsageDescription</key>
-	<string>$(PRODUCT_NAME) camera use</string>
+	<string>Camera use</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>$(PRODUCT_NAME) photo library use</string>
+	<string>Photo library use</string>
+	<key>NSPhotoLibraryAddUsageDescription</key>
+	<string>Save to library</string>
 	<key>CFBundleDisplayName</key>
 	<string>ThREE</string>
 	<key>CFBundleExecutable</key>

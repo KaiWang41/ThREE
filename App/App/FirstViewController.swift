@@ -144,7 +144,22 @@ class FirstViewController: UIViewController, UIImagePickerControllerDelegate, UI
     }
     
     private func savePhoto() {
+        var image: UIImage
         
+        switch tappedImageViewId {
+        case 1:
+            image = imageView1.image!
+        case 2:
+            image = imageView2.image!
+        case 3:
+            image = imageView3.image!
+        case 4:
+            image = imageView4.image!
+        default:
+            return
+        }
+        
+        UIImageWriteToSavedPhotosAlbum(image, nil, nil, nil)
     }
     
     private func removePhoto() {
@@ -152,7 +167,7 @@ class FirstViewController: UIViewController, UIImagePickerControllerDelegate, UI
     }
     
     private func addBorder(view: UIImageView) {
-        view.layer.borderWidth = 10
+        view.layer.borderWidth = 4
         view.layer.borderColor = UIColor.black.cgColor
     }
     

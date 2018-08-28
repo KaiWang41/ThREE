@@ -16,7 +16,7 @@ class RequirementViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        image.layer.borderWidth = 10
+        image.layer.borderWidth = 4
         image.layer.borderColor = UIColor.black.cgColor
     }
     
