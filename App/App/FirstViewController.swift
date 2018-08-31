@@ -70,6 +70,26 @@ class FirstViewController: UIViewController, UIImagePickerControllerDelegate, UI
         }
     }
     
+    @objc func image3Tapped(tapGestureRecognizer: UITapGestureRecognizer)
+    {
+        tappedImageViewId = 3
+        if currentPhotoNum < 3 {
+            chooseImage()
+        } else {
+            showOptions()
+        }
+    }
+    
+    @objc func image4Tapped(tapGestureRecognizer: UITapGestureRecognizer)
+    {
+        tappedImageViewId = 4
+        if currentPhotoNum < 4 {
+            chooseImage()
+        } else {
+            showOptions()
+        }
+    }
+    
     @IBAction func processPhotos(_ sender: Any) {
         let alert = UIAlertController(title: "Results", message: "The photos indicate that Sicong Ma is a relative SB.", preferredStyle: .alert)
         
@@ -77,6 +97,9 @@ class FirstViewController: UIViewController, UIImagePickerControllerDelegate, UI
         alert.addAction(UIAlertAction(title: "You are right", style: .default, handler: nil))
         
         present(alert, animated: true, completion: nil)
+    }
+    
+    @IBAction func startOver(_ sender: Any) {
     }
     
     // MARK: - Privates
@@ -92,6 +115,12 @@ class FirstViewController: UIViewController, UIImagePickerControllerDelegate, UI
         
         let tapGestureRecognizer2 = UITapGestureRecognizer(target: self, action: #selector(image2Tapped(tapGestureRecognizer:)))
         imageView2.addGestureRecognizer(tapGestureRecognizer2)
+        
+        let tapGestureRecognizer3 = UITapGestureRecognizer(target: self, action: #selector(image3Tapped(tapGestureRecognizer:)))
+        imageView3.addGestureRecognizer(tapGestureRecognizer3)
+        
+        let tapGestureRecognizer4 = UITapGestureRecognizer(target: self, action: #selector(image4Tapped(tapGestureRecognizer:)))
+        imageView4.addGestureRecognizer(tapGestureRecognizer4)
     }
     
     private func chooseImage() {
@@ -159,11 +188,47 @@ class FirstViewController: UIViewController, UIImagePickerControllerDelegate, UI
             return
         }
         
-        UIImageWriteToSavedPhotosAlbum(image, nil, nil, nil)
+        UIImageWriteToSavedPhotosAlbum(image, self, #selector(image(_:didFinishSavingWithError:contextInfo:)), nil)
+    }
+    
+    /// Save photo completion.
+    
+    @objc func image(_ image: UIImage, didFinishSavingWithError error: NSError?, contextInfo: UnsafeRawPointer) {
+        if let error = error {
+            
+            let ac = UIAlertController(title: "Error", message: error.localizedDescription, preferredStyle: .alert)
+            ac.addAction(UIAlertAction(title: "OK", style: .default))
+            present(ac, animated: true)
+            
+        } else {
+            
+            let ac = UIAlertController(title: "Save Success", message: "The image has been saved to your library.", preferredStyle: .alert)
+            ac.addAction(UIAlertAction(title: "OK", style: .default))
+            present(ac, animated: true)
+        }
     }
     
     private func removePhoto() {
         
+//        switch tappedImageViewId {
+//        case 1:
+//            imageView2.isHidden = true
+//            removeBorder(view: imageView1)
+//            imageView1.image = UIImage(named: "Picture1")
+//        case 2:
+//            imageView3.isHidden = true
+//            removeBorder(view: imageView2)
+//            imageView2.image = UIImage(named: "Picture2")
+//        case 3:
+//            imageView4.isHidden = true
+//            removeBorder(view: imageView3)
+//            imageView3.image = UIImage(named: "Picture2")
+//        case 4:
+//            removeBorder(view: imageView4)
+//            imageView4.image = UIImage(named: "Picture2")
+//        default:
+//            currentPhotoNum -= 1
+//        }
     }
     
     private func addBorder(view: UIImageView) {
@@ -171,46 +236,59 @@ class FirstViewController: UIViewController, UIImagePickerControllerDelegate, UI
         view.layer.borderColor = UIColor.black.cgColor
     }
     
+    private func removeBorder(view: UIImageView) {
+        view.layer.borderWidth = 0
+    }
+    
     // MARK: - Delegates
     
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
-        let image = info[UIImagePickerControllerOriginalImage] as! UIImage
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        
+        // Local variable inserted by Swift 4.2 migrator.
+        let info = convertFromUIImagePickerControllerInfoKeyDictionary(info)
+
+        let image = info[convertFromUIImagePickerControllerInfoKey(UIImagePickerController.InfoKey.originalImage)] as! UIImage
+        
         processButton.isHidden = false
         startOverButton.isHidden = false
         
         switch tappedImageViewId {
         case 1:
             
+            addBorder(view: imageView1)
             imageView1.image = image
+            
             if currentPhotoNum < 1 {
-                addBorder(view: imageView1)
                 currentPhotoNum = 1
                 imageView2.isHidden = false
             }
             
         case 2:
             
+            addBorder(view: imageView2)
             imageView2.image = image
+            
             if currentPhotoNum < 2 {
-                addBorder(view: imageView2)
                 currentPhotoNum = 2
                 imageView3.isHidden = false
             }
             
         case 3:
             
+            addBorder(view: imageView3)
             imageView3.image = image
+            
             if currentPhotoNum < 3 {
-                addBorder(view: imageView3)
                 currentPhotoNum = 3
                 imageView4.isHidden = false
             }
             
         case 4:
             
+            addBorder(view: imageView4)
             imageView4.image = image
+            
             if currentPhotoNum < 4 {
-                addBorder(view: imageView3)
                 currentPhotoNum = 4
             }
             
@@ -224,4 +302,15 @@ class FirstViewController: UIViewController, UIImagePickerControllerDelegate, UI
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         picker.dismiss(animated: true, completion: nil)
     }
+    
+}
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertFromUIImagePickerControllerInfoKeyDictionary(_ input: [UIImagePickerController.InfoKey: Any]) -> [String: Any] {
+	return Dictionary(uniqueKeysWithValues: input.map {key, value in (key.rawValue, value)})
+}
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertFromUIImagePickerControllerInfoKey(_ input: UIImagePickerController.InfoKey) -> String {
+	return input.rawValue
 }
