@@ -14,7 +14,6 @@
 		37331A34212E931C0007AD4B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 37331A32212E931C0007AD4B /* Main.storyboard */; };
 		37331A36212E931D0007AD4B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 37331A35212E931D0007AD4B /* Assets.xcassets */; };
 		37331A39212E931D0007AD4B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 37331A37212E931D0007AD4B /* LaunchScreen.storyboard */; };
-		3798FBA221392117003B87CA /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3798FBA121392117003B87CA /* GoogleService-Info.plist */; };
 		6743A8ED6D661299A905B1E4 /* Pods_App.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CA0FBE9D118BAB99A89C6870 /* Pods_App.framework */; };
 /* End PBXBuildFile section */
 
@@ -28,7 +27,6 @@
 		37331A35212E931D0007AD4B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		37331A38212E931D0007AD4B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		37331A3A212E931D0007AD4B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		3798FBA121392117003B87CA /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		99BD3921F70EA463E47F9271 /* Pods-App.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-App.release.xcconfig"; path = "Pods/Target Support Files/Pods-App/Pods-App.release.xcconfig"; sourceTree = "<group>"; };
 		CA0FBE9D118BAB99A89C6870 /* Pods_App.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_App.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D8D355A9A27885A98D4A252B /* Pods-App.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-App.debug.xcconfig"; path = "Pods/Target Support Files/Pods-App/Pods-App.debug.xcconfig"; sourceTree = "<group>"; };
@@ -67,7 +65,6 @@
 		37331A2B212E931C0007AD4B /* App */ = {
 			isa = PBXGroup;
 			children = (
-				3798FBA121392117003B87CA /* GoogleService-Info.plist */,
 				37331A2C212E931C0007AD4B /* AppDelegate.swift */,
 				37331A2E212E931C0007AD4B /* FirstViewController.swift */,
 				37331A30212E931C0007AD4B /* SecondViewController.swift */,
@@ -108,8 +105,6 @@
 				37331A25212E931C0007AD4B /* Sources */,
 				37331A26212E931C0007AD4B /* Frameworks */,
 				37331A27212E931C0007AD4B /* Resources */,
-				9EA88AD9F4F6B8C8E7DA4DC0 /* [CP] Embed Pods Frameworks */,
-				2242A9F7F92B8E93F787F015 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -160,7 +155,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				37331A39212E931D0007AD4B /* LaunchScreen.storyboard in Resources */,
-				3798FBA221392117003B87CA /* GoogleService-Info.plist in Resources */,
 				37331A36212E931D0007AD4B /* Assets.xcassets in Resources */,
 				37331A34212E931C0007AD4B /* Main.storyboard in Resources */,
 			);
@@ -185,54 +179,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		2242A9F7F92B8E93F787F015 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-App/Pods-App-resources.sh",
-				"${PODS_CONFIGURATION_BUILD_DIR}/GoogleMobileVision/GoogleMVFaceDetectorResources.bundle",
-				"${PODS_CONFIGURATION_BUILD_DIR}/GoogleMobileVision/GoogleMVTextDetectorResources.bundle",
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/GoogleMVFaceDetectorResources.bundle",
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/GoogleMVTextDetectorResources.bundle",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-App/Pods-App-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		9EA88AD9F4F6B8C8E7DA4DC0 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-App/Pods-App-frameworks.sh",
-				"${BUILT_PRODUCTS_DIR}/GTMSessionFetcher/GTMSessionFetcher.framework",
-				"${BUILT_PRODUCTS_DIR}/GoogleAPIClientForREST/GoogleAPIClientForREST.framework",
-				"${BUILT_PRODUCTS_DIR}/GoogleToolboxForMac/GoogleToolboxForMac.framework",
-				"${BUILT_PRODUCTS_DIR}/GoogleUtilities/GoogleUtilities.framework",
-				"${BUILT_PRODUCTS_DIR}/Protobuf/Protobuf.framework",
-				"${BUILT_PRODUCTS_DIR}/nanopb/nanopb.framework",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GTMSessionFetcher.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleAPIClientForREST.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleToolboxForMac.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleUtilities.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Protobuf.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/nanopb.framework",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-App/Pods-App-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
