@@ -7,25 +7,15 @@
 //
 
 import UIKit
-import Firebase
 
 class FirstViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
 
     // MARK: - IBOutlets
     
-    @IBOutlet weak var imageView1: UIImageView!
-    @IBOutlet weak var imageView2: UIImageView!
-    @IBOutlet weak var imageView3: UIImageView!
-    @IBOutlet weak var imageView4: UIImageView!
+    @IBOutlet weak var stackView: UIStackView!
     @IBOutlet weak var reqButton: UIButton!
     @IBOutlet weak var processButton: UIButton!
     @IBOutlet weak var startOverButton: UIButton!
-    
-    /// Firebase vision instance.
-    lazy var vision = Vision.vision()
-    
-    /// A dictionary holding current results of object detection.
-    var results = Dictionary<String, Any>()
     
     /// Image picker.
     let imagePickerController = UIImagePickerController()
@@ -33,62 +23,23 @@ class FirstViewController: UIViewController, UIImagePickerControllerDelegate, UI
     /// No. of photos already supplied.
     var currentPhotoNum = 0
     
-    /// ID of the currently tapped image view.
-    var tappedImageViewId = 0
+    /// Tapped iamge.
+    var tappedImageView = UIImageView()
+    var tappedImageViewIndex = 0
     
     // MARK: - UIViewController
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        /// Tap geture on images.
-        addRecognizer()
-
+ 
         /// Delegate.
         imagePickerController.delegate = self
+        
+        /// Add initial image view.
+        addImageView()
     }
     
     // MARK: - IBActions
-    
-    @objc func image1Tapped(tapGestureRecognizer: UITapGestureRecognizer)
-    {
-        tappedImageViewId = 1
-        if currentPhotoNum < 1 {
-            chooseImage()
-        } else {
-            showOptions()
-        }
-    }
-    
-    @objc func image2Tapped(tapGestureRecognizer: UITapGestureRecognizer)
-    {
-        tappedImageViewId = 2
-        if currentPhotoNum < 2 {
-            chooseImage()
-        } else {
-            showOptions()
-        }
-    }
-    
-    @objc func image3Tapped(tapGestureRecognizer: UITapGestureRecognizer)
-    {
-        tappedImageViewId = 3
-        if currentPhotoNum < 3 {
-            chooseImage()
-        } else {
-            showOptions()
-        }
-    }
-    
-    @objc func image4Tapped(tapGestureRecognizer: UITapGestureRecognizer)
-    {
-        tappedImageViewId = 4
-        if currentPhotoNum < 4 {
-            chooseImage()
-        } else {
-            showOptions()
-        }
-    }
     
     @IBAction func processPhotos(_ sender: Any) {
         let alert = UIAlertController(title: "Results", message: "The photos indicate that Sicong Ma is a relative SB.", preferredStyle: .alert)
@@ -104,23 +55,40 @@ class FirstViewController: UIViewController, UIImagePickerControllerDelegate, UI
     
     // MARK: - Privates
     
-    private func addRecognizer() {
-        imageView1.isUserInteractionEnabled = true
-        imageView2.isUserInteractionEnabled = true
-        imageView3.isUserInteractionEnabled = true
-        imageView4.isUserInteractionEnabled = true
+    private func addImageView() {
         
-        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(image1Tapped(tapGestureRecognizer:)))
-        imageView1.addGestureRecognizer(tapGestureRecognizer)
+        let imageView = UIImageView()
+        imageView.contentMode = .scaleToFill
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        let widthConstraint = NSLayoutConstraint(item: imageView, attribute: .width
+            , relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 300)
+        let heightConstraint = NSLayoutConstraint(item: imageView, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 300)
+        imageView.addConstraint(widthConstraint)
+        imageView.addConstraint(heightConstraint)
         
-        let tapGestureRecognizer2 = UITapGestureRecognizer(target: self, action: #selector(image2Tapped(tapGestureRecognizer:)))
-        imageView2.addGestureRecognizer(tapGestureRecognizer2)
+        if currentPhotoNum == 0 {
+            imageView.image = UIImage(named: "Picture1")
+        } else {
+            imageView.image = UIImage(named: "Picture2")
+        }
         
-        let tapGestureRecognizer3 = UITapGestureRecognizer(target: self, action: #selector(image3Tapped(tapGestureRecognizer:)))
-        imageView3.addGestureRecognizer(tapGestureRecognizer3)
+        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(imageTapped(tapGestureRecognizer:)))
         
-        let tapGestureRecognizer4 = UITapGestureRecognizer(target: self, action: #selector(image4Tapped(tapGestureRecognizer:)))
-        imageView4.addGestureRecognizer(tapGestureRecognizer4)
+        imageView.isUserInteractionEnabled = true
+        imageView.addGestureRecognizer(tapGestureRecognizer)
+        
+        stackView.insertArrangedSubview(imageView, at: 2+currentPhotoNum)
+    }
+    
+    @objc func imageTapped(tapGestureRecognizer: UITapGestureRecognizer) {
+        tappedImageView = tapGestureRecognizer.view as! UIImageView
+        tappedImageViewIndex = stackView.arrangedSubviews.firstIndex(of: tappedImageView)!
+        
+        if tappedImageViewIndex == 2 + currentPhotoNum {
+            chooseImage()
+        } else {
+            showOptions()
+        }
     }
     
     private func chooseImage() {
@@ -173,35 +141,21 @@ class FirstViewController: UIViewController, UIImagePickerControllerDelegate, UI
     }
     
     private func savePhoto() {
-        var image: UIImage
-        
-        switch tappedImageViewId {
-        case 1:
-            image = imageView1.image!
-        case 2:
-            image = imageView2.image!
-        case 3:
-            image = imageView3.image!
-        case 4:
-            image = imageView4.image!
-        default:
-            return
-        }
+        let image = tappedImageView.image!
         
         UIImageWriteToSavedPhotosAlbum(image, self, #selector(image(_:didFinishSavingWithError:contextInfo:)), nil)
     }
     
     /// Save photo completion.
-    
     @objc func image(_ image: UIImage, didFinishSavingWithError error: NSError?, contextInfo: UnsafeRawPointer) {
         if let error = error {
-            
+
             let ac = UIAlertController(title: "Error", message: error.localizedDescription, preferredStyle: .alert)
             ac.addAction(UIAlertAction(title: "OK", style: .default))
             present(ac, animated: true)
-            
+
         } else {
-            
+
             let ac = UIAlertController(title: "Save Success", message: "The image has been saved to your library.", preferredStyle: .alert)
             ac.addAction(UIAlertAction(title: "OK", style: .default))
             present(ac, animated: true)
@@ -210,25 +164,7 @@ class FirstViewController: UIViewController, UIImagePickerControllerDelegate, UI
     
     private func removePhoto() {
         
-//        switch tappedImageViewId {
-//        case 1:
-//            imageView2.isHidden = true
-//            removeBorder(view: imageView1)
-//            imageView1.image = UIImage(named: "Picture1")
-//        case 2:
-//            imageView3.isHidden = true
-//            removeBorder(view: imageView2)
-//            imageView2.image = UIImage(named: "Picture2")
-//        case 3:
-//            imageView4.isHidden = true
-//            removeBorder(view: imageView3)
-//            imageView3.image = UIImage(named: "Picture2")
-//        case 4:
-//            removeBorder(view: imageView4)
-//            imageView4.image = UIImage(named: "Picture2")
-//        default:
-//            currentPhotoNum -= 1
-//        }
+
     }
     
     private func addBorder(view: UIImageView) {
@@ -252,48 +188,15 @@ class FirstViewController: UIViewController, UIImagePickerControllerDelegate, UI
         processButton.isHidden = false
         startOverButton.isHidden = false
         
-        switch tappedImageViewId {
-        case 1:
-            
-            addBorder(view: imageView1)
-            imageView1.image = image
-            
-            if currentPhotoNum < 1 {
-                currentPhotoNum = 1
-                imageView2.isHidden = false
-            }
-            
-        case 2:
-            
-            addBorder(view: imageView2)
-            imageView2.image = image
-            
-            if currentPhotoNum < 2 {
-                currentPhotoNum = 2
-                imageView3.isHidden = false
-            }
-            
-        case 3:
-            
-            addBorder(view: imageView3)
-            imageView3.image = image
-            
-            if currentPhotoNum < 3 {
-                currentPhotoNum = 3
-                imageView4.isHidden = false
-            }
-            
-        case 4:
-            
-            addBorder(view: imageView4)
-            imageView4.image = image
-            
+        addBorder(view: tappedImageView)
+        tappedImageView.image = image
+        
+        /// Determine if a new image view is to be added.
+        if tappedImageViewIndex == 2 + currentPhotoNum {
+            currentPhotoNum += 1
             if currentPhotoNum < 4 {
-                currentPhotoNum = 4
+                addImageView()
             }
-            
-        default:
-            return
         }
         
         picker.dismiss(animated: true, completion: nil)

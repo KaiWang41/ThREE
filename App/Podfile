@@ -7,12 +7,8 @@ target 'App' do
 
   # Pods for App
   # [START base_dependencies]
-  pod 'Firebase/Core'
-  pod 'Firebase/MLVision'
+
   # [END base_dependencies]
-  pod 'Firebase/MLVisionBarcodeModel'
-  pod 'Firebase/MLVisionFaceModel'
-  pod 'Firebase/MLVisionLabelModel'
-  pod 'Firebase/MLVisionTextModel'
+
 
 end
