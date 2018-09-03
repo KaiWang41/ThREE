@@ -171,7 +171,7 @@
                                 <rect key="frame" x="0.0" y="88" width="375" height="690"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" alignment="center" spacing="32" translatesAutoresizingMaskIntoConstraints="NO" id="87O-7n-SU7">
-                                        <rect key="frame" x="0.0" y="0.0" width="375" height="522"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="604"/>
                                         <subviews>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="12f-Kn-piX" userLabel="Enpty">
                                                 <rect key="frame" x="67.666666666666686" y="0.0" width="240" height="8"/>
@@ -182,10 +182,10 @@
                                                 </constraints>
                                             </view>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fZU-7m-H01">
-                                                <rect key="frame" x="37.666666666666657" y="40" width="300" height="150"/>
+                                                <rect key="frame" x="37.666666666666657" y="40" width="300" height="232"/>
                                                 <subviews>
                                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" alignment="center" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="hKf-D1-Sx0">
-                                                        <rect key="frame" x="6" y="22" width="289" height="107"/>
+                                                        <rect key="frame" x="6" y="22" width="289" height="189"/>
                                                         <subviews>
                                                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="trees" translatesAutoresizingMaskIntoConstraints="NO" id="Wdg-GA-sLK">
                                                                 <rect key="frame" x="128.33333333333334" y="0.0" width="32" height="32"/>
@@ -194,9 +194,10 @@
                                                                     <constraint firstAttribute="height" constant="32" id="uVf-uD-dMd"/>
                                                                 </constraints>
                                                             </imageView>
-                                                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" editable="NO" text="The text board provided by ThREE must be placed next to the tree for size calculation. See example below:" textAlignment="center" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hBR-Xc-m9B">
-                                                                <rect key="frame" x="0.33333333333334281" y="40.66666666666665" width="288" height="66.333333333333314"/>
+                                                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" editable="NO" textAlignment="center" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hBR-Xc-m9B">
+                                                                <rect key="frame" x="0.33333333333334281" y="56" width="288" height="133"/>
                                                                 <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                                                                <string key="text">The text board provided by ThREE must be placed next to the tree for size calculation.  Keep the outline of the tree as close to the frame border as possible.  See example below:</string>
                                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                                             </textView>
@@ -207,7 +208,7 @@
                                                 <constraints>
                                                     <constraint firstItem="rtY-Fc-CNe" firstAttribute="trailing" secondItem="hKf-D1-Sx0" secondAttribute="trailing" constant="5" id="4WL-EH-zFY"/>
                                                     <constraint firstItem="hKf-D1-Sx0" firstAttribute="top" secondItem="rtY-Fc-CNe" secondAttribute="top" constant="22" id="XrM-Pd-smc"/>
-                                                    <constraint firstAttribute="height" constant="150" id="bjR-V2-8R9"/>
+                                                    <constraint firstAttribute="height" constant="232" id="bjR-V2-8R9"/>
                                                     <constraint firstItem="rtY-Fc-CNe" firstAttribute="bottom" secondItem="hKf-D1-Sx0" secondAttribute="bottom" constant="21" id="bt6-wc-2wc"/>
                                                     <constraint firstAttribute="width" constant="300" id="qxj-6Y-Z1V"/>
                                                     <constraint firstItem="hKf-D1-Sx0" firstAttribute="leading" secondItem="rtY-Fc-CNe" secondAttribute="leading" constant="6" id="vC9-Tg-Tbn"/>
@@ -220,7 +221,7 @@
                                                 </userDefinedRuntimeAttributes>
                                             </view>
                                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="tree_sample" translatesAutoresizingMaskIntoConstraints="NO" id="cxQ-sz-hI8">
-                                                <rect key="frame" x="37.666666666666657" y="222" width="300" height="300"/>
+                                                <rect key="frame" x="37.666666666666657" y="304" width="300" height="300"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="300" id="DGg-FQ-xY1"/>
                                                     <constraint firstAttribute="height" constant="300" id="n0l-mP-5Ln"/>
@@ -268,18 +269,135 @@
         <scene sceneID="wg7-f3-ORb">
             <objects>
                 <viewController id="8rJ-Kc-sve" customClass="SecondViewController" customModule="App" customModuleProvider="target" sceneMemberID="viewController">
-                    <textField key="view" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" id="iqj-Ag-cGa">
+                    <view key="view" contentMode="scaleToFill" id="tLx-tw-Hpo">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <nil key="textColor"/>
-                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                        <textInputTraits key="textInputTraits"/>
-                    </textField>
-                    <tabBarItem key="tabBarItem" title="Leaf Photo" image="second" id="cPa-gy-q4n"/>
+                        <subviews>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tug-Ni-dPP">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="729"/>
+                                <subviews>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" alignment="center" spacing="32" translatesAutoresizingMaskIntoConstraints="NO" id="ICG-gc-O2a">
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="260"/>
+                                        <subviews>
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NXS-gR-9y5" userLabel="Enpty">
+                                                <rect key="frame" x="67.666666666666686" y="0.0" width="240" height="8"/>
+                                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" constant="240" id="91t-Mj-lN1"/>
+                                                    <constraint firstAttribute="height" constant="8" id="91w-ii-Xqy"/>
+                                                </constraints>
+                                            </view>
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="a2s-3Q-O0p">
+                                                <rect key="frame" x="37.666666666666657" y="40" width="300" height="180"/>
+                                                <subviews>
+                                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" alignment="center" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="ZXI-IV-4Ki">
+                                                        <rect key="frame" x="6" y="22" width="289" height="137"/>
+                                                        <subviews>
+                                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="leaves" translatesAutoresizingMaskIntoConstraints="NO" id="clu-Ol-Vc6">
+                                                                <rect key="frame" x="128.33333333333334" y="0.0" width="32" height="32"/>
+                                                                <constraints>
+                                                                    <constraint firstAttribute="height" constant="32" id="eHb-lQ-8Sv"/>
+                                                                    <constraint firstAttribute="width" constant="32" id="rqr-HK-jly"/>
+                                                                </constraints>
+                                                            </imageView>
+                                                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" editable="NO" text="You can also supply photos of the leaf/leaves of the tree to ID its type using leaf characteristics." textAlignment="center" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8mp-M3-JN5">
+                                                                <rect key="frame" x="15" y="54" width="258.66666666666669" height="83"/>
+                                                                <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                                                                <constraints>
+                                                                    <constraint firstAttribute="height" constant="83" id="b7i-2T-7ni"/>
+                                                                    <constraint firstAttribute="width" constant="258.5" id="sJ3-Py-yjI"/>
+                                                                </constraints>
+                                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                                            </textView>
+                                                        </subviews>
+                                                    </stackView>
+                                                </subviews>
+                                                <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" constant="300" id="33N-4v-Bdq"/>
+                                                    <constraint firstItem="iDB-6y-6Cq" firstAttribute="bottom" secondItem="ZXI-IV-4Ki" secondAttribute="bottom" constant="21" id="9gf-31-4HQ"/>
+                                                    <constraint firstItem="ZXI-IV-4Ki" firstAttribute="leading" secondItem="iDB-6y-6Cq" secondAttribute="leading" constant="6" id="Ipk-aK-pxU"/>
+                                                    <constraint firstAttribute="height" constant="180" id="JUQ-FT-wTK"/>
+                                                    <constraint firstItem="iDB-6y-6Cq" firstAttribute="trailing" secondItem="ZXI-IV-4Ki" secondAttribute="trailing" constant="5" id="Yej-j6-D8u"/>
+                                                    <constraint firstItem="ZXI-IV-4Ki" firstAttribute="top" secondItem="iDB-6y-6Cq" secondAttribute="top" constant="22" id="wDp-QB-HiB"/>
+                                                </constraints>
+                                                <viewLayoutGuide key="safeArea" id="iDB-6y-6Cq"/>
+                                                <userDefinedRuntimeAttributes>
+                                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                        <integer key="value" value="32"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                </userDefinedRuntimeAttributes>
+                                            </view>
+                                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="L66-yv-uII">
+                                                <rect key="frame" x="37.666666666666657" y="236" width="300" height="50"/>
+                                                <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="50" id="ROH-Wf-T2u"/>
+                                                    <constraint firstAttribute="width" constant="300" id="toS-sJ-kzr"/>
+                                                </constraints>
+                                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                                <state key="normal" title="Process Photos">
+                                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                </state>
+                                                <connections>
+                                                    <action selector="processPhotos:" destination="8rJ-Kc-sve" eventType="touchUpInside" id="zHy-rx-wtF"/>
+                                                </connections>
+                                            </button>
+                                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FmC-wd-qWu">
+                                                <rect key="frame" x="37.666666666666657" y="236" width="300" height="50"/>
+                                                <color key="backgroundColor" red="0.66666668650000005" green="0.16338964559999999" blue="0.20486332360000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="50" id="mra-pM-4D6"/>
+                                                    <constraint firstAttribute="width" constant="300" id="oRD-aR-RJc"/>
+                                                </constraints>
+                                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                                <state key="normal" title="Start Over">
+                                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                </state>
+                                                <connections>
+                                                    <action selector="startOver:" destination="8rJ-Kc-sve" eventType="touchUpInside" id="6jV-EE-2Md"/>
+                                                </connections>
+                                            </button>
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="h38-Vt-wBH" userLabel="Enpty">
+                                                <rect key="frame" x="67.666666666666686" y="252" width="240" height="8"/>
+                                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="8" id="8Hc-D7-kbg"/>
+                                                    <constraint firstAttribute="width" constant="240" id="N7q-Yk-faw"/>
+                                                </constraints>
+                                            </view>
+                                        </subviews>
+                                    </stackView>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstAttribute="bottom" secondItem="ICG-gc-O2a" secondAttribute="bottom" id="7qw-iz-UDn"/>
+                                    <constraint firstItem="ICG-gc-O2a" firstAttribute="leading" secondItem="tug-Ni-dPP" secondAttribute="leading" id="ACl-5q-CZu"/>
+                                    <constraint firstItem="ICG-gc-O2a" firstAttribute="top" secondItem="tug-Ni-dPP" secondAttribute="top" id="RYx-7k-xwd"/>
+                                    <constraint firstAttribute="trailing" secondItem="ICG-gc-O2a" secondAttribute="trailing" id="m64-tm-knU"/>
+                                    <constraint firstItem="ICG-gc-O2a" firstAttribute="width" secondItem="tug-Ni-dPP" secondAttribute="width" id="zZ0-nG-zEG"/>
+                                </constraints>
+                            </scrollView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="tug-Ni-dPP" firstAttribute="trailing" secondItem="MsF-RQ-zJC" secondAttribute="trailing" id="U3f-LW-OMJ"/>
+                            <constraint firstItem="MsF-RQ-zJC" firstAttribute="bottom" secondItem="tug-Ni-dPP" secondAttribute="bottom" id="c1q-xk-eVC"/>
+                            <constraint firstItem="tug-Ni-dPP" firstAttribute="leading" secondItem="MsF-RQ-zJC" secondAttribute="leading" id="ksB-SU-1wt"/>
+                            <constraint firstItem="tug-Ni-dPP" firstAttribute="top" secondItem="tLx-tw-Hpo" secondAttribute="top" id="qHh-J8-px2"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="MsF-RQ-zJC"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="Leaf Photo" id="Bzs-5t-LCB"/>
+                    <connections>
+                        <outlet property="processButton" destination="L66-yv-uII" id="Hfn-IE-V0L"/>
+                        <outlet property="stackView" destination="ICG-gc-O2a" id="soG-ZI-kAU"/>
+                        <outlet property="startOverButton" destination="FmC-wd-qWu" id="t7C-Ok-fBQ"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4Nw-L8-lE0" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="983" y="906"/>
+            <point key="canvasLocation" x="1924" y="905.9113300492611"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="yl2-sM-qoP">
@@ -292,7 +410,7 @@
                     </tabBar>
                     <connections>
                         <segue destination="SDP-iV-hXL" kind="relationship" relationship="viewControllers" id="u7Y-xg-7CH"/>
-                        <segue destination="8rJ-Kc-sve" kind="relationship" relationship="viewControllers" id="lzU-1b-eKA"/>
+                        <segue destination="Cda-G3-e4g" kind="relationship" relationship="viewControllers" id="lzU-1b-eKA"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="HuB-VB-40B" sceneMemberID="firstResponder"/>
@@ -336,9 +454,29 @@
             </objects>
             <point key="canvasLocation" x="2568.75" y="-348.59154929577466"/>
         </scene>
+        <!--Leaf Photo-->
+        <scene sceneID="eP1-gw-wAc">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="Cda-G3-e4g" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Leaf Photo" image="second" id="cPa-gy-q4n"/>
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="BAp-kj-0V5">
+                        <rect key="frame" x="0.0" y="44" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="8rJ-Kc-sve" kind="relationship" relationship="rootViewController" id="Tzh-z7-c3P"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="XFy-ek-vOG" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="981.60000000000002" y="905.9113300492611"/>
+        </scene>
     </scenes>
     <resources>
         <image name="first" width="32" height="32"/>
+        <image name="leaves" width="26" height="26"/>
         <image name="second" width="32" height="32"/>
         <image name="tree_sample" width="166" height="166"/>
         <image name="trees" width="26" height="26"/>

@@ -17,13 +17,13 @@ class FirstViewController: UIViewController, UIImagePickerControllerDelegate, UI
     @IBOutlet weak var processButton: UIButton!
     @IBOutlet weak var startOverButton: UIButton!
     
-    /// Image picker.
+    // Image picker.
     let imagePickerController = UIImagePickerController()
     
-    /// No. of photos already supplied.
+    // No. of photos already supplied.
     var currentPhotoNum = 0
     
-    /// Tapped iamge.
+    // Tapped iamge.
     var tappedImageView = UIImageView()
     var tappedImageViewIndex = 0
     
@@ -32,15 +32,16 @@ class FirstViewController: UIViewController, UIImagePickerControllerDelegate, UI
     override func viewDidLoad() {
         super.viewDidLoad()
  
-        /// Delegate.
+        // Delegate.
         imagePickerController.delegate = self
         
-        /// Add initial image view.
+        // Add initial image view.
         addImageView()
     }
     
     // MARK: - IBActions
     
+    // Identification and calculation.
     @IBAction func processPhotos(_ sender: Any) {
         let alert = UIAlertController(title: "Results", message: "The photos indicate that Sicong Ma is a relative SB.", preferredStyle: .alert)
         
@@ -50,13 +51,35 @@ class FirstViewController: UIViewController, UIImagePickerControllerDelegate, UI
         present(alert, animated: true, completion: nil)
     }
     
+    // Remove all current photos.
     @IBAction func startOver(_ sender: Any) {
+        
+        let ac = UIAlertController(title: "Start Over", message: "Clear all current photos?", preferredStyle: .alert)
+        ac.addAction(UIAlertAction(title: "Cancel", style: .default, handler: nil))
+        ac.addAction(UIAlertAction(title: "Confirm", style: .cancel, handler: { (alert: UIAlertAction) in
+            
+            self.currentPhotoNum = 0
+            self.processButton.isHidden = true
+            self.startOverButton.isHidden = true
+            
+            for subview in self.stackView.arrangedSubviews {
+                if type(of: subview) == UIImageView.self {
+                    self.stackView.removeArrangedSubview(subview)
+                    subview.removeFromSuperview()
+                }
+            }
+            
+            self.addImageView()
+        }))
+        present(ac, animated: true)
     }
     
     // MARK: - Privates
     
+    // Add image view to the stack view for new photos.
     private func addImageView() {
         
+        // Constraints.
         let imageView = UIImageView()
         imageView.contentMode = .scaleToFill
         imageView.translatesAutoresizingMaskIntoConstraints = false
@@ -81,9 +104,12 @@ class FirstViewController: UIViewController, UIImagePickerControllerDelegate, UI
     }
     
     @objc func imageTapped(tapGestureRecognizer: UITapGestureRecognizer) {
+        
+        // Tapped image view and its index in the stack.
         tappedImageView = tapGestureRecognizer.view as! UIImageView
         tappedImageViewIndex = stackView.arrangedSubviews.firstIndex(of: tappedImageView)!
         
+        // Add new photo or tap on existed photo.
         if tappedImageViewIndex == 2 + currentPhotoNum {
             chooseImage()
         } else {
@@ -146,7 +172,7 @@ class FirstViewController: UIViewController, UIImagePickerControllerDelegate, UI
         UIImageWriteToSavedPhotosAlbum(image, self, #selector(image(_:didFinishSavingWithError:contextInfo:)), nil)
     }
     
-    /// Save photo completion.
+    // Save photo completion.
     @objc func image(_ image: UIImage, didFinishSavingWithError error: NSError?, contextInfo: UnsafeRawPointer) {
         if let error = error {
 
@@ -156,7 +182,7 @@ class FirstViewController: UIViewController, UIImagePickerControllerDelegate, UI
 
         } else {
 
-            let ac = UIAlertController(title: "Save Success", message: "The image has been saved to your library.", preferredStyle: .alert)
+            let ac = UIAlertController(title: "Save Successful", message: "The image has been saved to your library.", preferredStyle: .alert)
             ac.addAction(UIAlertAction(title: "OK", style: .default))
             present(ac, animated: true)
         }
@@ -164,7 +190,25 @@ class FirstViewController: UIViewController, UIImagePickerControllerDelegate, UI
     
     private func removePhoto() {
         
-
+        let ac = UIAlertController(title: "Confirm", message: "Remove this photo from the list?", preferredStyle: .alert)
+        ac.addAction(UIAlertAction(title: "Cancel", style: .default, handler: nil))
+        ac.addAction(UIAlertAction(title: "Confirm", style: .cancel, handler: { (alert: UIAlertAction) in
+            
+            self.currentPhotoNum -= 1
+            
+            self.stackView.removeArrangedSubview(self.tappedImageView)
+            self.tappedImageView.removeFromSuperview()
+            
+            if self.currentPhotoNum == 0 {
+                self.processButton.isHidden = true
+                self.startOverButton.isHidden = true
+            }
+            
+            if self.currentPhotoNum == 3 {
+                self.addImageView()
+            }
+        }))
+        present(ac, animated: true)
     }
     
     private func addBorder(view: UIImageView) {
@@ -191,7 +235,7 @@ class FirstViewController: UIViewController, UIImagePickerControllerDelegate, UI
         addBorder(view: tappedImageView)
         tappedImageView.image = image
         
-        /// Determine if a new image view is to be added.
+        // Determine if a new photo is added or an old one changed.
         if tappedImageViewIndex == 2 + currentPhotoNum {
             currentPhotoNum += 1
             if currentPhotoNum < 4 {
