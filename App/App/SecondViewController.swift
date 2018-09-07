@@ -42,20 +42,15 @@ class SecondViewController: UIViewController, UIImagePickerControllerDelegate, U
     
     // Identification.
     @IBAction func processPhotos(_ sender: Any) {
-        let alert = UIAlertController(title: "Results", message: "The photos indicate that Sicong Ma is a relative SB.", preferredStyle: .alert)
         
-        alert.addAction(UIAlertAction(title: "Indeed", style: .default, handler: nil))
-        alert.addAction(UIAlertAction(title: "You are right", style: .default, handler: nil))
-        
-        present(alert, animated: true, completion: nil)
     }
     
     // Remove all current photos.
     @IBAction func startOver(_ sender: Any) {
         
-        let ac = UIAlertController(title: "Start Over", message: "Clear all current photos?", preferredStyle: .alert)
+        let ac = UIAlertController(title: "Start Over", message: "Discard all current photos?", preferredStyle: .alert)
         ac.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
-        ac.addAction(UIAlertAction(title: "Confirm", style: .default, handler: { (alert: UIAlertAction) in
+        ac.addAction(UIAlertAction(title: "Yes", style: .destructive, handler: { _ in
             
             self.currentPhotoNum = 0
             self.processButton.isHidden = true
@@ -182,7 +177,7 @@ class SecondViewController: UIViewController, UIImagePickerControllerDelegate, U
             
         } else {
             
-            let ac = UIAlertController(title: "Save Successful", message: "The image has been saved to your library.", preferredStyle: .alert)
+            let ac = UIAlertController(title: "Success", message: nil, preferredStyle: .alert)
             ac.addAction(UIAlertAction(title: "OK", style: .default))
             present(ac, animated: true)
         }
@@ -190,9 +185,9 @@ class SecondViewController: UIViewController, UIImagePickerControllerDelegate, U
     
     private func removePhoto() {
         
-        let ac = UIAlertController(title: "Confirm", message: "Remove this photo from the list?", preferredStyle: .alert)
+        let ac = UIAlertController(title: nil, message: "Remove photo?", preferredStyle: .alert)
         ac.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
-        ac.addAction(UIAlertAction(title: "Confirm", style: .default, handler: { (alert: UIAlertAction) in
+        ac.addAction(UIAlertAction(title: "Yes", style: .destructive, handler: { _ in
             
             self.currentPhotoNum -= 1
             
@@ -261,4 +256,3 @@ fileprivate func convertFromUIImagePickerControllerInfoKeyDictionary(_ input: [U
 fileprivate func convertFromUIImagePickerControllerInfoKey(_ input: UIImagePickerController.InfoKey) -> String {
     return input.rawValue
 }
-

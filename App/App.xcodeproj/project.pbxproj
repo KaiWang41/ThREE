@@ -14,6 +14,7 @@
 		37331A34212E931C0007AD4B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 37331A32212E931C0007AD4B /* Main.storyboard */; };
 		37331A36212E931D0007AD4B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 37331A35212E931D0007AD4B /* Assets.xcassets */; };
 		37331A39212E931D0007AD4B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 37331A37212E931D0007AD4B /* LaunchScreen.storyboard */; };
+		3798FBA621422289003B87CA /* TreeResultsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3798FBA521422289003B87CA /* TreeResultsViewController.swift */; };
 		6743A8ED6D661299A905B1E4 /* Pods_App.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CA0FBE9D118BAB99A89C6870 /* Pods_App.framework */; };
 /* End PBXBuildFile section */
 
@@ -27,6 +28,7 @@
 		37331A35212E931D0007AD4B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		37331A38212E931D0007AD4B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		37331A3A212E931D0007AD4B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		3798FBA521422289003B87CA /* TreeResultsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TreeResultsViewController.swift; sourceTree = "<group>"; };
 		99BD3921F70EA463E47F9271 /* Pods-App.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-App.release.xcconfig"; path = "Pods/Target Support Files/Pods-App/Pods-App.release.xcconfig"; sourceTree = "<group>"; };
 		CA0FBE9D118BAB99A89C6870 /* Pods_App.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_App.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D8D355A9A27885A98D4A252B /* Pods-App.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-App.debug.xcconfig"; path = "Pods/Target Support Files/Pods-App/Pods-App.debug.xcconfig"; sourceTree = "<group>"; };
@@ -73,6 +75,7 @@
 				37331A37212E931D0007AD4B /* LaunchScreen.storyboard */,
 				37331A3A212E931D0007AD4B /* Info.plist */,
 				372666B92133C55600F98ACA /* RequirementViewController.swift */,
+				3798FBA521422289003B87CA /* TreeResultsViewController.swift */,
 			);
 			path = App;
 			sourceTree = "<group>";
@@ -192,6 +195,7 @@
 				37331A2D212E931C0007AD4B /* AppDelegate.swift in Sources */,
 				372666BA2133C55600F98ACA /* RequirementViewController.swift in Sources */,
 				37331A2F212E931C0007AD4B /* FirstViewController.swift in Sources */,
+				3798FBA621422289003B87CA /* TreeResultsViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -339,7 +343,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = DCH89VT4WP;
 				INFOPLIST_FILE = App/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -359,7 +363,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = DCH89VT4WP;
 				INFOPLIST_FILE = App/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
