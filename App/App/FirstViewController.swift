@@ -7,8 +7,11 @@
 //
 
 import UIKit
+import CoreML
+import Vision
+import ImageIO
 
-class FirstViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+class FirstViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate{
 
     // MARK: - IBOutlets
     
@@ -26,6 +29,13 @@ class FirstViewController: UIViewController, UIImagePickerControllerDelegate, UI
     // Tapped iamge.
     var tappedImageView = UIImageView()
     var tappedImageViewIndex = 0
+    
+    // Classification error.
+    var clfError = ""
+    
+    // Classification results.
+    var clfLabel = [String()]
+    var clfConf = [Float()]
     
     // MARK: - UIViewController
     
@@ -48,10 +58,39 @@ class FirstViewController: UIViewController, UIImagePickerControllerDelegate, UI
         alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
         alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { _ in
             
-            self.performSegue(withIdentifier: "toTreeResults", sender: self)
+            for subview in self.stackView.arrangedSubviews {
+                if type(of: subview) == UIImageView.self {
+                    let image = (subview as! UIImageView).image
+                    
+                    self.classify(for: image!)
+                    
+                    break
+                }
+            }
+            
+            
+            if self.clfError != "" {
+                let ac = UIAlertController(title: "Error", message: self.clfError+"\n Please try again.", preferredStyle: .alert)
+                ac.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+            } else {
+//                self.performSegue(withIdentifier: "toTreeResults", sender: self)
+            }
         }))
         
         present(alert, animated: true, completion: nil)
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "toTreeResults" {
+            if let des = segue.destination as? UINavigationController {
+                
+                if let vc = des.topViewController as? TreeResultsViewController {
+                    
+                    vc.typeText = self.clfLabel[1]
+                    vc.confText = String(String(round(self.clfConf[1]*100))+"%")
+                }
+            }
+        }
     }
     
     // Remove all current photos.
@@ -253,7 +292,91 @@ class FirstViewController: UIViewController, UIImagePickerControllerDelegate, UI
         picker.dismiss(animated: true, completion: nil)
     }
     
+    
+    
+    
+    
+    // MARK: - Image Classification
+    
+    /// - Tag: MLModelSetup
+    lazy var classificationRequest: VNCoreMLRequest = {
+        do {
+            
+            let model = try VNCoreMLModel(for: TreeClassifier().model)
+            
+            let request = VNCoreMLRequest(model: model, completionHandler: { [weak self] request, error in
+                self?.processClassifications(for: request, error: error)
+            })
+            request.imageCropAndScaleOption = .centerCrop
+            return request
+        } catch {
+            clfError = "Failed to load Vision ML model: \(error)"
+            fatalError(clfError)
+        }
+    }()
+    
+    /// - Tag: PerformRequests
+    func classify(for image: UIImage) {
+        
+        let orientation = CGImagePropertyOrientation(image.imageOrientation)
+        
+        guard let ciImage = CIImage(image: image) else {
+            
+            clfError = "Unable to create \(CIImage.self) from \(image)."
+            fatalError(clfError)
+            
+        }
+        
+        DispatchQueue.global(qos: .userInitiated).async {
+            let handler = VNImageRequestHandler(ciImage: ciImage, orientation: orientation)
+            do {
+                try
+                    handler.perform([self.classificationRequest])
+            } catch {
+                /*
+                 This handler catches general image processing errors. The `classificationRequest`'s
+                 completion handler `processClassifications(_:error:)` catches errors specific
+                 to processing that request.
+                 */
+                
+                self.clfError = "Failed to perform classification.\n\(error.localizedDescription)"
+                print(self.clfError)
+            }
+        }
+    }
+    
+    /// Updates the UI with the results of the classification.
+    /// - Tag: ProcessClassifications
+    func processClassifications(for request: VNRequest, error: Error?) {
+        DispatchQueue.main.async {
+            guard let results = request.results else {
+                self.clfError = "Unable to classify image.\n\(error!.localizedDescription)"
+                return
+            }
+            
+            // The `results` will always be `VNClassificationObservation`s, as specified by the Core ML model in this project.
+            let classifications = results as! [VNClassificationObservation]
+            
+            if classifications.isEmpty {
+                self.clfError = "Nothing recognized."
+            } else {
+        
+                let classification = classifications.prefix(1)[0]
+                print(classification)
+
+                self.clfLabel.append(classification.identifier)
+                self.clfConf.append(classification.confidence)
+                print("label")
+                print(self.clfLabel)
+            }
+        }
+    }
+    
 }
+
+
+
+
 
 // Helper function inserted by Swift 4.2 migrator.
 fileprivate func convertFromUIImagePickerControllerInfoKeyDictionary(_ input: [UIImagePickerController.InfoKey: Any]) -> [String: Any] {

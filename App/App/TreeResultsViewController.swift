@@ -21,6 +21,14 @@ class TreeResultsViewController: UIViewController {
     @IBOutlet weak var waterLabel: UILabel!
     
     var resultsSaved = false
+    var typeText = ""
+    var confText = ""
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
+        typeLabel.text = typeText
+        confidenceLabel.text = confText
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
