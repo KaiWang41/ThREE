@@ -31,8 +31,8 @@ class FirstViewController: UIViewController, UIImagePickerControllerDelegate, UI
     var tappedImageViewIndex = 0
     
     // Classification.
-    var clfLabel = [String()]
-    var clfConf = [Float()]
+    var clfLabel = [""]
+    var clfConf = [Float(0)]
     
     
     
@@ -63,6 +63,7 @@ class FirstViewController: UIViewController, UIImagePickerControllerDelegate, UI
         alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
         alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { _ in
             
+            // Find images and classify.
             var n = 0
             for subview in self.stackView.arrangedSubviews {
                 if n == self.currentPhotoNum {
@@ -83,14 +84,14 @@ class FirstViewController: UIViewController, UIImagePickerControllerDelegate, UI
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        print(clfLabel)
+        print(clfLabel, "\n", clfConf)
         if segue.identifier == "toTreeResults" {
             if let des = segue.destination as? UINavigationController {
                 if let vc = des.topViewController as? TreeResultsViewController {
                     
                     var maxConf = Float(-1)
                     var type = ""
-                    for i in 1...(clfLabel.count-1) {
+                    for i in 1...(clfConf.count-1) {
                         if clfConf[i] > maxConf {
                             maxConf = clfConf[i]
                             type = clfLabel[i]
@@ -98,7 +99,7 @@ class FirstViewController: UIViewController, UIImagePickerControllerDelegate, UI
                     }
                     
                     vc.typeText = type
-                    vc.confText = String(String(round(maxConf*100))+"%")
+                    vc.confText = String(Int(maxConf*100))+"%"
                 }
             }
         }
@@ -123,6 +124,9 @@ class FirstViewController: UIViewController, UIImagePickerControllerDelegate, UI
             }
             
             self.addImageView()
+            
+            self.clfLabel = [""]
+            self.clfConf = [Float(0)]
         }))
         present(ac, animated: true)
     }
@@ -134,7 +138,7 @@ class FirstViewController: UIViewController, UIImagePickerControllerDelegate, UI
         
         // Constraints.
         let imageView = UIImageView()
-        imageView.contentMode = .scaleToFill
+        imageView.contentMode = .scaleAspectFit
         imageView.translatesAutoresizingMaskIntoConstraints = false
         let widthConstraint = NSLayoutConstraint(item: imageView, attribute: .width
             , relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 300)
@@ -332,6 +336,7 @@ class FirstViewController: UIViewController, UIImagePickerControllerDelegate, UI
             guard let results = request.results as? [VNClassificationObservation] else {
                 fatalError("Failed to load results.")
             }
+            
             print(results)
             if let topResult = results.first {
                 self.clfLabel.append(topResult.identifier)
