@@ -10,14 +10,8 @@ import UIKit
 
 class RequirementViewController: UIViewController {
     
-    @IBOutlet weak var doneButton: UIBarButtonItem!
-    @IBOutlet weak var image: UIImageView!
-    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        image.layer.borderWidth = 4
-        image.layer.borderColor = UIColor.black.cgColor
     }
     
     @IBAction func pressDone(_ sender: Any) {
