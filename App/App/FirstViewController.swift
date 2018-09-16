@@ -31,11 +31,13 @@ class FirstViewController: UIViewController, UIImagePickerControllerDelegate, UI
     var tappedImageViewIndex = 0
     
     // Classification for each photo.
-    var clfLabel = [""]
-    var clfConf = [Float(0)]
+    var clfLabel = [String]()
+    var clfConf = [Float]()
     
-    // No of green pixels in each photo.
-    var greenPixelCounts = [0]
+    // Size calculation.
+    var surfaceAreas = [CGFloat]()
+    var canopySizes = [CGFloat]()
+    var waterVolumes = [CGFloat]()
     
     // Text board size in metres.
     let boardWidth: CGFloat = 1.1
@@ -52,6 +54,7 @@ class FirstViewController: UIViewController, UIImagePickerControllerDelegate, UI
         
         // Add initial image place holder.
         addImageView()
+
     }
     
     
@@ -269,12 +272,15 @@ class FirstViewController: UIViewController, UIImagePickerControllerDelegate, UI
     @IBAction func processPhotos(_ sender: Any) {
         
         // Clear previous results
-        clfLabel = [""]
-        clfConf = [Float(0)]
-        greenPixelCounts = [0]
+        clfLabel.removeAll()
+        clfConf.removeAll()
+        surfaceAreas.removeAll()
+        canopySizes.removeAll()
+        waterVolumes.removeAll()
         
         
-        // Present alert based on sender button.
+        
+        // Present alert based on tapped button.
         let message = ((sender as! UIButton) == processButton) ? "Use these photos for type identification?" : "Use these photos for size calculation?"
         
         let alert = UIAlertController(title: nil, message: message, preferredStyle: .alert)
@@ -284,9 +290,11 @@ class FirstViewController: UIViewController, UIImagePickerControllerDelegate, UI
             
             
             // Find images in stack view and process accordingly.
-            // Number of currently processed photos.
+            // Keep count of processed photos.
             var n = 0
             for subview in self.stackView.arrangedSubviews {
+                
+                // All photos processed.
                 if n == self.currentPhotoNum {
                     break
                 }
@@ -327,7 +335,7 @@ class FirstViewController: UIViewController, UIImagePickerControllerDelegate, UI
 
                     var maxConf = Float(-1)
                     var type = ""
-                    for i in 1...currentPhotoNum {
+                    for i in 0..<currentPhotoNum {
                         if clfConf[i] > maxConf {
                             maxConf = clfConf[i]
                             type = clfLabel[i]
@@ -345,8 +353,11 @@ class FirstViewController: UIViewController, UIImagePickerControllerDelegate, UI
         if segue.identifier == "toSizeResults" {
             let vc = (segue.destination as! UINavigationController).topViewController as! TreeSizeResultsViewController
             
-            vc.areaText = "123 m²"
-            vc.sizeText = "432 m³"
+            // Average over all photos.
+            let avgArea = getAvg(array: surfaceAreas)
+            let avgSize = getAvg(array: canopySizes)
+            vc.areaText = String(Int(avgArea)) + " m²"
+            vc.sizeText = String(Int(avgSize)) + " m³"
             vc.waterText = "666 L"
         }
     }
@@ -475,12 +486,13 @@ class FirstViewController: UIViewController, UIImagePickerControllerDelegate, UI
             if let box = targetObservation?.boundingBox {
                 
                 // Image size in metres.
-                
                 let imageWidthInMeters = self.boardWidth / box.size.width
                 let imageHeightInMeters = self.boardHeight / box.size.height
                 
+                let (area, size) = self.calculateAreaAndSize(image: cgImage, width: imageWidthInMeters, height: imageHeightInMeters)
                 
-                
+                self.canopySizes.append(size)
+                self.surfaceAreas.append(area)
             }
         })
         request.reportCharacterBoxes = true
@@ -495,10 +507,121 @@ class FirstViewController: UIViewController, UIImagePickerControllerDelegate, UI
         }
     }
     
+    // Calculate area and size.
+    // The shape of tree assumed to be a cylinder for each row of pixels.
+    private func calculateAreaAndSize(image: CGImage, width: CGFloat, height: CGFloat) -> (CGFloat, CGFloat) {
+        
+        let pixelData = image.dataProvider?.data
+        let data: UnsafePointer<UInt8> = CFDataGetBytePtr(pixelData)
+        
+        // Determine if a pixel is green.
+        func isGreen(x: Int, y: Int) -> Bool {
+            
+            let pixelInfo: Int = (image.width * y + x) * 4
+            let red = data[pixelInfo]
+            let green = data[pixelInfo + 1]
+            let blue = data[pixelInfo + 2]
+            
+            if (green >= 20) && (red < 140) && (red < green) && (blue < green/2) {
+                return true
+            } else {
+                return false
+            }
+        }
+        
+        var area: CGFloat = 0
+        var size: CGFloat = 0
+        var water: CGFloat = 0
+        
+        // Count green pixels for each row.
+        
+        for y in 0..<image.height {
+            
+            var count = 0
+            for x in 0..<image.width {
+                
+                // If a green pixel is not adjacent to any other green one, it is not included.
+                var isLeaf = false
+                if isGreen(x: x, y: y) {
+                    
+                    // Same column.
+                    if y >= 1 {
+                        if isGreen(x: x, y: y-1) {
+                            // Found adjacent green.
+                            isLeaf = true
+                        }
+                    }
+                    if y+1 < image.height {
+                        if isGreen(x: x, y: y+1) {
+                            isLeaf = true
+                        }
+                    }
+                    
+                    
+                    // Left column.
+                    if x >= 1 {
+                        if isGreen(x: x-1, y: y) {
+                            isLeaf = true
+                        }
+                        if y >= 1 {
+                            if isGreen(x: x-1, y: y-1) {
+                                isLeaf = true
+                            }
+                        }
+                        if y+1 < image.height {
+                            if isGreen(x: x-1, y: y+1) {
+                                isLeaf = true
+                            }
+                        }
+                    }
+                    
+                    // Right column.
+                    if x+1 < image.width {
+                        if isGreen(x: x+1, y: y) {
+                            isLeaf = true
+                        }
+                        if y >= 1 {
+                            if isGreen(x: x+1, y: y-1) {
+                                isLeaf = true
+                            }
+                        }
+                        if y+1 < image.height {
+                            if isGreen(x: x+1, y: y+1) {
+                                isLeaf = true
+                            }
+                        }
+                    }
+                }
+                
+                if isLeaf {
+                    count += 1
+                }
+            }
+            
+            // Calculation.
+            let diameter = (CGFloat(count) / CGFloat(image.width)) * width
+            let pixelHeight = (CGFloat(1) / CGFloat(image.height)) * height
+            size += CGFloat.pi * diameter * diameter / 4 * pixelHeight
+            area += CGFloat.pi * diameter * pixelHeight
+        }
+        
+        return (area, size)
+    }
+    
+    
+    
     private func presentError(_ message: String) {
         let ac = UIAlertController(title: "Error", message: message, preferredStyle: .alert)
         ac.addAction(UIAlertAction(title: "OK", style: .destructive, handler: nil))
         present(ac, animated: true)
+    }
+    
+    private func getAvg(array: [CGFloat]) -> CGFloat {
+        var sum = CGFloat(0)
+        for element in array {
+            sum += element
+        }
+        return sum/CGFloat(array.count)
     }
 
     
