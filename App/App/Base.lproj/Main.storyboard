@@ -556,9 +556,9 @@ Unicode: U+00B3, UTF-8: C2 B3</string>
                                                                 </constraints>
                                                             </imageView>
                                                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" editable="NO" textAlignment="center" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hBR-Xc-m9B">
-                                                                <rect key="frame" x="0.0" y="36.66666666666665" width="288.66666666666669" height="116.33333333333331"/>
+                                                                <rect key="frame" x="1" y="36.66666666666665" width="286.66666666666669" height="116.33333333333331"/>
                                                                 <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
-                                                                <string key="text">Keep the outline of the tree as close to the frame border as possible.  For type identification, place the text board provided by ThREE next to the tree as the example below:</string>
+                                                                <string key="text">Make the tree fill as much of the photo as possible.  (For type identification only) Place the text board provided by ThREE next to the tree as the example below:</string>
                                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                                             </textView>
@@ -694,7 +694,7 @@ Unicode: U+00B3, UTF-8: C2 B3</string>
                                                     <constraint firstAttribute="width" constant="300" id="toS-sJ-kzr"/>
                                                 </constraints>
                                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
-                                                <state key="normal" title="Process Photos">
+                                                <state key="normal" title="Identify Type">
                                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 </state>
                                                 <connections>
@@ -750,11 +750,209 @@ Unicode: U+00B3, UTF-8: C2 B3</string>
                         <outlet property="processButton" destination="L66-yv-uII" id="Hfn-IE-V0L"/>
                         <outlet property="stackView" destination="ICG-gc-O2a" id="soG-ZI-kAU"/>
                         <outlet property="startOverButton" destination="FmC-wd-qWu" id="t7C-Ok-fBQ"/>
+                        <segue destination="IZV-YI-FFa" kind="presentation" identifier="toLeafResults" id="8k6-n2-BB4"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4Nw-L8-lE0" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1924" y="905.9113300492611"/>
+        </scene>
+        <!--Identification-->
+        <scene sceneID="V3c-xN-Aoa">
+            <objects>
+                <viewController id="uhk-C3-Yqq" customClass="LeafResultsViewController" customModule="App" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="cgP-gE-fnz">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="XE9-27-bTy">
+                                <rect key="frame" x="0.0" y="88" width="375" height="690"/>
+                                <subviews>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" alignment="center" spacing="36" translatesAutoresizingMaskIntoConstraints="NO" id="Vxr-8R-GOE">
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="676"/>
+                                        <subviews>
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="FhI-pR-cAw" userLabel="Enpty">
+                                                <rect key="frame" x="67.666666666666686" y="0.0" width="240" height="8"/>
+                                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="8" id="5mn-v8-Avf"/>
+                                                    <constraint firstAttribute="width" constant="240" id="Dlk-T8-x0S"/>
+                                                </constraints>
+                                            </view>
+                                            <stackView opaque="NO" contentMode="scaleToFill" distribution="equalCentering" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="nj6-zu-Jfo">
+                                                <rect key="frame" x="37.666666666666657" y="44" width="300" height="150"/>
+                                                <subviews>
+                                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="oak_tree_sample" translatesAutoresizingMaskIntoConstraints="NO" id="9YH-E3-rKS">
+                                                        <rect key="frame" x="0.0" y="3" width="144" height="144"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="height" constant="144" id="QVT-BV-qf3"/>
+                                                            <constraint firstAttribute="width" constant="144" id="Uaw-aM-OjP"/>
+                                                        </constraints>
+                                                    </imageView>
+                                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Oak_leaf_sample" translatesAutoresizingMaskIntoConstraints="NO" id="h28-vy-YUa">
+                                                        <rect key="frame" x="156" y="3" width="144" height="144"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="width" constant="144" id="X24-bu-Wwt"/>
+                                                            <constraint firstAttribute="height" constant="144" id="cgm-z2-6cd"/>
+                                                        </constraints>
+                                                    </imageView>
+                                                </subviews>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" constant="300" id="3Sv-AS-oXn"/>
+                                                    <constraint firstAttribute="height" constant="150" id="adB-ta-aPn"/>
+                                                </constraints>
+                                            </stackView>
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Dfc-al-2Vm">
+                                                <rect key="frame" x="37.666666666666657" y="230" width="300" height="186"/>
+                                                <subviews>
+                                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" alignment="center" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="BhY-2V-GvN">
+                                                        <rect key="frame" x="0.0" y="8" width="300" height="170"/>
+                                                        <subviews>
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="This tree has been identified as" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UKf-JU-HJ3">
+                                                                <rect key="frame" x="30.333333333333343" y="0.0" width="239.00000000000003" height="20.333333333333332"/>
+                                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                                <nil key="textColor"/>
+                                                                <nil key="highlightedColor"/>
+                                                            </label>
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Oak" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xx8-hP-RfH">
+                                                                <rect key="frame" x="121.66666666666667" y="39.333333333333314" width="56.333333333333329" height="36"/>
+                                                                <fontDescription key="fontDescription" type="boldSystem" pointSize="30"/>
+                                                                <color key="textColor" red="0.0" green="0.40000000000000002" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
+                                                                <nil key="highlightedColor"/>
+                                                            </label>
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="with a confidence of" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UrA-iK-jLl">
+                                                                <rect key="frame" x="72.333333333333343" y="94.666666666666686" width="155" height="20.333333333333329"/>
+                                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                                <nil key="textColor"/>
+                                                                <nil key="highlightedColor"/>
+                                                            </label>
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="78%" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ryE-V3-Na4">
+                                                                <rect key="frame" x="117.66666666666669" y="134" width="64.333333333333314" height="36"/>
+                                                                <fontDescription key="fontDescription" type="boldSystem" pointSize="30"/>
+                                                                <color key="textColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                <nil key="highlightedColor"/>
+                                                            </label>
+                                                        </subviews>
+                                                    </stackView>
+                                                </subviews>
+                                                <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="186" id="8f2-rt-K1F"/>
+                                                    <constraint firstAttribute="width" constant="300" id="CV0-7u-cvh"/>
+                                                    <constraint firstItem="BhY-2V-GvN" firstAttribute="top" secondItem="ozj-aS-xQq" secondAttribute="top" constant="8" id="S2H-bx-ViJ"/>
+                                                    <constraint firstItem="ozj-aS-xQq" firstAttribute="bottom" secondItem="BhY-2V-GvN" secondAttribute="bottom" constant="8" id="Uyt-P0-fX7"/>
+                                                    <constraint firstItem="ozj-aS-xQq" firstAttribute="trailing" secondItem="BhY-2V-GvN" secondAttribute="trailing" id="V4H-hq-2xF"/>
+                                                    <constraint firstItem="BhY-2V-GvN" firstAttribute="leading" secondItem="ozj-aS-xQq" secondAttribute="leading" id="qSU-S2-KHT"/>
+                                                </constraints>
+                                                <viewLayoutGuide key="safeArea" id="ozj-aS-xQq"/>
+                                                <userDefinedRuntimeAttributes>
+                                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                        <integer key="value" value="32"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                </userDefinedRuntimeAttributes>
+                                            </view>
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="RGt-Iv-TfJ">
+                                                <rect key="frame" x="37.666666666666657" y="452" width="300" height="180"/>
+                                                <subviews>
+                                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" alignment="center" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="m83-ah-9Gy">
+                                                        <rect key="frame" x="6" y="22" width="289" height="137"/>
+                                                        <subviews>
+                                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="leaves" translatesAutoresizingMaskIntoConstraints="NO" id="mS3-AB-6qf">
+                                                                <rect key="frame" x="128.33333333333334" y="0.0" width="32" height="32"/>
+                                                                <constraints>
+                                                                    <constraint firstAttribute="height" constant="32" id="1Wd-ol-kO7"/>
+                                                                    <constraint firstAttribute="width" constant="32" id="EWT-nY-oCn"/>
+                                                                </constraints>
+                                                            </imageView>
+                                                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" editable="NO" text="You can also upload photos of the leaves for a second opinion on the tree type." textAlignment="center" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lr2-7o-q9j">
+                                                                <rect key="frame" x="15" y="36" width="258.66666666666669" height="83"/>
+                                                                <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                                                                <constraints>
+                                                                    <constraint firstAttribute="height" constant="83" id="Hyf-82-DWF"/>
+                                                                    <constraint firstAttribute="width" constant="258.5" id="nRC-CP-BOL"/>
+                                                                </constraints>
+                                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                                            </textView>
+                                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="s2m-sO-NPR">
+                                                                <rect key="frame" x="88" y="123" width="113" height="14"/>
+                                                                <state key="normal" title="Use Tree Photos"/>
+                                                                <connections>
+                                                                    <action selector="toLeafPhoto:" destination="ZG6-Pn-EgQ" eventType="touchUpInside" id="2ZH-jC-dTM"/>
+                                                                    <action selector="toTreePhoto:" destination="uhk-C3-Yqq" eventType="touchUpInside" id="iwr-dg-cQ0"/>
+                                                                </connections>
+                                                            </button>
+                                                        </subviews>
+                                                    </stackView>
+                                                </subviews>
+                                                <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                                                <constraints>
+                                                    <constraint firstItem="cgA-2q-rrp" firstAttribute="trailing" secondItem="m83-ah-9Gy" secondAttribute="trailing" constant="5" id="795-ga-tTp"/>
+                                                    <constraint firstAttribute="height" constant="180" id="LdQ-rV-ZBa"/>
+                                                    <constraint firstItem="cgA-2q-rrp" firstAttribute="bottom" secondItem="m83-ah-9Gy" secondAttribute="bottom" constant="21" id="nJR-7k-deh"/>
+                                                    <constraint firstItem="m83-ah-9Gy" firstAttribute="top" secondItem="cgA-2q-rrp" secondAttribute="top" constant="22" id="qD6-aJ-Khp"/>
+                                                    <constraint firstItem="m83-ah-9Gy" firstAttribute="leading" secondItem="cgA-2q-rrp" secondAttribute="leading" constant="6" id="sus-Yz-reY"/>
+                                                    <constraint firstAttribute="width" constant="300" id="wEN-aT-gea"/>
+                                                </constraints>
+                                                <viewLayoutGuide key="safeArea" id="cgA-2q-rrp"/>
+                                                <userDefinedRuntimeAttributes>
+                                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                        <integer key="value" value="32"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                </userDefinedRuntimeAttributes>
+                                            </view>
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="BNd-0F-8ZG" userLabel="Enpty">
+                                                <rect key="frame" x="67.666666666666686" y="668" width="240" height="8"/>
+                                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="8" id="0kC-Dg-X1y"/>
+                                                    <constraint firstAttribute="width" constant="240" id="mPp-mW-ws9"/>
+                                                </constraints>
+                                            </view>
+                                        </subviews>
+                                    </stackView>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstAttribute="bottom" secondItem="Vxr-8R-GOE" secondAttribute="bottom" id="GJJ-cV-q3m"/>
+                                    <constraint firstItem="Vxr-8R-GOE" firstAttribute="top" secondItem="XE9-27-bTy" secondAttribute="top" id="Ge6-jK-NPA"/>
+                                    <constraint firstItem="Vxr-8R-GOE" firstAttribute="width" secondItem="XE9-27-bTy" secondAttribute="width" id="OBl-Z5-ymB"/>
+                                    <constraint firstItem="Vxr-8R-GOE" firstAttribute="leading" secondItem="XE9-27-bTy" secondAttribute="leading" id="R7f-Xz-JGM"/>
+                                    <constraint firstAttribute="trailing" secondItem="Vxr-8R-GOE" secondAttribute="trailing" id="WBi-TR-uUy"/>
+                                </constraints>
+                            </scrollView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="XE9-27-bTy" firstAttribute="bottom" secondItem="gjj-gJ-aHq" secondAttribute="bottom" id="8Wn-PO-IX1"/>
+                            <constraint firstItem="XE9-27-bTy" firstAttribute="leading" secondItem="gjj-gJ-aHq" secondAttribute="leading" id="i2A-bN-MGm"/>
+                            <constraint firstItem="XE9-27-bTy" firstAttribute="top" secondItem="gjj-gJ-aHq" secondAttribute="top" id="iSG-eJ-wyd"/>
+                            <constraint firstItem="XE9-27-bTy" firstAttribute="trailing" secondItem="gjj-gJ-aHq" secondAttribute="trailing" id="iWi-qS-Ixq"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="gjj-gJ-aHq"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="Identification" id="yh6-dg-Z8L">
+                        <barButtonItem key="leftBarButtonItem" systemItem="save" id="NZf-so-eFM">
+                            <connections>
+                                <action selector="onSave:" destination="uhk-C3-Yqq" id="gcY-Ib-kyR"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" style="done" systemItem="done" id="Bq4-oF-vpE">
+                            <connections>
+                                <action selector="onDone:" destination="uhk-C3-Yqq" id="UMd-a7-Kdh"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="confidenceLabel" destination="ryE-V3-Na4" id="OBO-3C-FUK"/>
+                        <outlet property="leafImage" destination="h28-vy-YUa" id="gbE-Fj-YF1"/>
+                        <outlet property="stackView" destination="Vxr-8R-GOE" id="mf6-jk-5U2"/>
+                        <outlet property="treeImage" destination="9YH-E3-rKS" id="qnB-eq-gt3"/>
+                        <outlet property="typeLabel" destination="xx8-hP-RfH" id="t5K-7F-SbD"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="D2e-h9-wcv" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="4124" y="882.26600985221683"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="yl2-sM-qoP">
@@ -866,13 +1064,31 @@ Unicode: U+00B3, UTF-8: C2 B3</string>
             </objects>
             <point key="canvasLocation" x="3669.5999999999999" y="-1235.4679802955666"/>
         </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="SXQ-UO-MOH">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="IZV-YI-FFa" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="ASI-qj-7aY">
+                        <rect key="frame" x="0.0" y="44" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="uhk-C3-Yqq" kind="relationship" relationship="rootViewController" id="A2i-YN-4e8"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="H1G-Bt-vS2" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3181.5999999999999" y="882.26600985221683"/>
+        </scene>
     </scenes>
     <resources>
         <image name="Measurement" width="329" height="325"/>
         <image name="Oak_leaf_sample" width="204" height="135"/>
         <image name="first" width="32" height="32"/>
         <image name="leaves" width="26" height="26"/>
-        <image name="oak_tree_sample" width="229" height="166"/>
+        <image name="oak_tree_sample" width="392" height="375"/>
         <image name="second" width="32" height="32"/>
         <image name="tree_sample" width="477" height="356"/>
         <image name="trees" width="26" height="26"/>

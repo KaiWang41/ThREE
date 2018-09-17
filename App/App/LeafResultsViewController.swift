@@ -1,37 +1,45 @@
 //
-//  TreeSizeResultsViewController.swift
+//  LeafResultsViewController.swift
 //  App
 //
-//  Created by wky on 13/9/18.
+//  Created by wky on 17/9/18.
 //  Copyright © 2018 ThREE. All rights reserved.
 //
 
 import UIKit
 
-class TreeSizeResultsViewController: UIViewController {
+class LeafResultsViewController: UIViewController {
 
-    
-    @IBOutlet weak var areaLabel: UILabel!
-    @IBOutlet weak var sizeLabel: UILabel!
-    @IBOutlet weak var waterLabel: UILabel!
+
+    @IBOutlet weak var treeImage: UIImageView!
+    @IBOutlet weak var leafImage: UIImageView!
     @IBOutlet weak var stackView: UIStackView!
+    @IBOutlet weak var typeLabel: UILabel!
+    @IBOutlet weak var confidenceLabel: UILabel!
     
     
     var resultsSaved = false
-    var areaText = ""
-    var sizeText = ""
-    var waterText = ""
+    var typeText = ""
+    var confText = ""
+    var confColor = UIColor.white
+    
+    
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
-        areaLabel.text = areaText
-        sizeLabel.text = sizeText
-        waterLabel.text = waterText
+        
+        typeLabel.text = typeText
+        confidenceLabel.text = confText
+        confidenceLabel.textColor = confColor
     }
+    
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
     }
+    
+    
     
     
     @IBAction func onSave(_ sender: Any) {
@@ -52,6 +60,8 @@ class TreeSizeResultsViewController: UIViewController {
         present(ac, animated: true)
     }
     
+    
+    
     @objc func image(_ image: UIImage, didFinishSavingWithError error: NSError?, contextInfo info: UnsafeRawPointer) {
         
         if let error = error {
@@ -68,14 +78,20 @@ class TreeSizeResultsViewController: UIViewController {
         }
     }
     
+    
+    
+    
     @IBAction func onDone(_ sender: Any) {
         if !resultsSaved {
             let ac = UIAlertController(title: nil, message: "Close without saving?", preferredStyle: .alert)
-            ac.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+            ac.addAction(UIAlertAction(title: "Back", style: .cancel, handler: nil))
             ac.addAction(UIAlertAction(title: "Yes", style: .destructive, handler: {_ in
+                
                 self.dismiss(animated: true, completion: nil)
             }))
+            
             present(ac, animated: true)
+            
         } else {
             dismiss(animated: true, completion: nil)
         }
@@ -84,7 +100,35 @@ class TreeSizeResultsViewController: UIViewController {
     
     
     
+    @IBAction func toTreePhoto(_ sender: Any) {
+        if !resultsSaved {
+            let ac = UIAlertController(title: nil, message: "Close without saving?", preferredStyle: .alert)
+            ac.addAction(UIAlertAction(title: "Back", style: .cancel, handler: nil))
+            ac.addAction(UIAlertAction(title: "Yes", style: .destructive, handler: {_ in
+                
+                self.dismissAndChangeTab()
+            }))
+            
+            present(ac, animated: true)
+            
+        } else {
+            dismissAndChangeTab()
+        }
+    }
     
+    
+    
+    
+    private func dismissAndChangeTab() {
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        let tabBarController = appDelegate.window?.rootViewController as! UITabBarController
+        tabBarController.selectedIndex = 0
+        
+        dismiss(animated: true, completion: nil)
+    }
+
+
+
     /*
     // MARK: - Navigation
 

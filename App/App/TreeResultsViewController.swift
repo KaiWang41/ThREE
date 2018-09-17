@@ -36,7 +36,7 @@ class TreeResultsViewController: UIViewController {
     
 
     @IBAction func onSave(_ sender: Any) {
-        let ac = UIAlertController(title: "Save", message: "Save as image?", preferredStyle: .alert)
+        let ac = UIAlertController(title: nil, message: "Save to library?", preferredStyle: .alert)
         ac.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
         ac.addAction(UIAlertAction(title: "Yes", style: .default, handler: { alert in
             

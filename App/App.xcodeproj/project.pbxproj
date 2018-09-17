@@ -18,6 +18,7 @@
 		3798FBAA214243B5003B87CA /* TreeClassifier.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = 3798FBA9214243B5003B87CA /* TreeClassifier.mlmodel */; };
 		3798FBAC2142467F003B87CA /* CGImagePropertyOrientation+UIImageOrientation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3798FBAB2142467F003B87CA /* CGImagePropertyOrientation+UIImageOrientation.swift */; };
 		379A8F19214A3B260093270F /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 379A8F18214A3B260093270F /* Utilities.swift */; };
+		379A8F1B214F5B740093270F /* LeafResultsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 379A8F1A214F5B740093270F /* LeafResultsViewController.swift */; };
 		37A8C696214A0FB300E72122 /* TreeSizeResultsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37A8C695214A0FB300E72122 /* TreeSizeResultsViewController.swift */; };
 		6743A8ED6D661299A905B1E4 /* Pods_App.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CA0FBE9D118BAB99A89C6870 /* Pods_App.framework */; };
 /* End PBXBuildFile section */
@@ -36,6 +37,7 @@
 		3798FBA9214243B5003B87CA /* TreeClassifier.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = TreeClassifier.mlmodel; sourceTree = "<group>"; };
 		3798FBAB2142467F003B87CA /* CGImagePropertyOrientation+UIImageOrientation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CGImagePropertyOrientation+UIImageOrientation.swift"; sourceTree = "<group>"; };
 		379A8F18214A3B260093270F /* Utilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utilities.swift; sourceTree = "<group>"; };
+		379A8F1A214F5B740093270F /* LeafResultsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeafResultsViewController.swift; sourceTree = "<group>"; };
 		37A8C695214A0FB300E72122 /* TreeSizeResultsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TreeSizeResultsViewController.swift; sourceTree = "<group>"; };
 		99BD3921F70EA463E47F9271 /* Pods-App.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-App.release.xcconfig"; path = "Pods/Target Support Files/Pods-App/Pods-App.release.xcconfig"; sourceTree = "<group>"; };
 		CA0FBE9D118BAB99A89C6870 /* Pods_App.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_App.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -88,6 +90,7 @@
 				3798FBA521422289003B87CA /* TreeResultsViewController.swift */,
 				37A8C695214A0FB300E72122 /* TreeSizeResultsViewController.swift */,
 				379A8F18214A3B260093270F /* Utilities.swift */,
+				379A8F1A214F5B740093270F /* LeafResultsViewController.swift */,
 			);
 			path = App;
 			sourceTree = "<group>";
@@ -204,6 +207,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				37331A31212E931C0007AD4B /* SecondViewController.swift in Sources */,
+				379A8F1B214F5B740093270F /* LeafResultsViewController.swift in Sources */,
 				3798FBAA214243B5003B87CA /* TreeClassifier.mlmodel in Sources */,
 				37A8C696214A0FB300E72122 /* TreeSizeResultsViewController.swift in Sources */,
 				3798FBAC2142467F003B87CA /* CGImagePropertyOrientation+UIImageOrientation.swift in Sources */,

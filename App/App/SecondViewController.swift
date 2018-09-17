@@ -7,6 +7,9 @@
 //
 
 import UIKit
+import CoreML
+import Vision
+import ImageIO
 
 class SecondViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
@@ -26,7 +29,12 @@ class SecondViewController: UIViewController, UIImagePickerControllerDelegate, U
     var tappedImageView = UIImageView()
     var tappedImageViewIndex = 0
     
-    // MARK: - UIViewController
+    // Classification for each photo.
+    var clfLabel = [String]()
+    var clfConf = [Float]()
+   
+    
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -34,48 +42,21 @@ class SecondViewController: UIViewController, UIImagePickerControllerDelegate, U
         // Delegate.
         imagePickerController.delegate = self
         
-        // Add initial image view.
+        // Add initial image place holder.
         addImageView()
-    }
-    
-    // MARK: - IBActions
-    
-    // Identification.
-    @IBAction func processPhotos(_ sender: Any) {
         
     }
     
-    // Remove all current photos.
-    @IBAction func startOver(_ sender: Any) {
-        
-        let ac = UIAlertController(title: "Start Over", message: "Discard all current photos?", preferredStyle: .alert)
-        ac.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
-        ac.addAction(UIAlertAction(title: "Yes", style: .destructive, handler: { _ in
-            
-            self.currentPhotoNum = 0
-            self.processButton.isHidden = true
-            self.startOverButton.isHidden = true
-            
-            for subview in self.stackView.arrangedSubviews {
-                if type(of: subview) == UIImageView.self {
-                    self.stackView.removeArrangedSubview(subview)
-                    subview.removeFromSuperview()
-                }
-            }
-            
-            self.addImageView()
-        }))
-        present(ac, animated: true)
-    }
     
-    // MARK: - Privates
+    
+    
     
     // Add image view to the stack view for new photos.
     private func addImageView() {
         
         // Constraints.
         let imageView = UIImageView()
-        imageView.contentMode = .scaleToFill
+        imageView.contentMode = .scaleAspectFit
         imageView.translatesAutoresizingMaskIntoConstraints = false
         let widthConstraint = NSLayoutConstraint(item: imageView, attribute: .width
             , relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 300)
@@ -83,19 +64,25 @@ class SecondViewController: UIViewController, UIImagePickerControllerDelegate, U
         imageView.addConstraint(widthConstraint)
         imageView.addConstraint(heightConstraint)
         
+        // If it's the first photo or not.
         if currentPhotoNum == 0 {
             imageView.image = UIImage(named: "Picture1")
         } else {
             imageView.image = UIImage(named: "Picture2")
         }
         
+        // Add tap gesture to every photo.
         let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(imageTapped(tapGestureRecognizer:)))
         
         imageView.isUserInteractionEnabled = true
         imageView.addGestureRecognizer(tapGestureRecognizer)
         
+        // Add to stack view.
         stackView.insertArrangedSubview(imageView, at: 2+currentPhotoNum)
     }
+    
+    
+    
     
     // Image tapped.
     @objc func imageTapped(tapGestureRecognizer: UITapGestureRecognizer) {
@@ -112,6 +99,10 @@ class SecondViewController: UIViewController, UIImagePickerControllerDelegate, U
         }
     }
     
+    
+    
+    
+    // Add new photo.
     private func chooseImage() {
         let actionSheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         
@@ -135,6 +126,55 @@ class SecondViewController: UIViewController, UIImagePickerControllerDelegate, U
         present(actionSheet, animated: true, completion: nil)
     }
     
+    
+    
+    
+    // Image picker delegate.
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        
+        // Local variable inserted by Swift 4.2 migrator.
+        let info = convertFromUIImagePickerControllerInfoKeyDictionary(info)
+        
+        let image = info[convertFromUIImagePickerControllerInfoKey(UIImagePickerController.InfoKey.originalImage)] as! UIImage
+        
+        
+        // Only show buttons when there is at least one photo.
+        processButton.isHidden = false
+        startOverButton.isHidden = false
+        
+        
+        // Show photo in the bordered frame.
+        addBorder(view: tappedImageView)
+        tappedImageView.image = image
+        
+        // Determine if a new photo is added or an old one changed and update the number.
+        if tappedImageViewIndex == 2 + currentPhotoNum {
+            currentPhotoNum += 1
+            if currentPhotoNum < 4 {
+                addImageView()
+            }
+        }
+        
+        picker.dismiss(animated: true, completion: nil)
+    }
+    
+    
+    // Border for photos added.
+    private func addBorder(view: UIImageView) {
+        view.layer.borderWidth = 4
+        view.layer.borderColor = UIColor.black.cgColor
+    }
+    
+    private func removeBorder(view: UIImageView) {
+        view.layer.borderWidth = 0
+    }
+    
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        picker.dismiss(animated: true, completion: nil)
+    }
+    
+    
+    // Tap on existing photo.
     private func showOptions() {
         let actionSheet = UIAlertController(title: "Choose Action", message: nil, preferredStyle: .actionSheet)
         
@@ -161,13 +201,15 @@ class SecondViewController: UIViewController, UIImagePickerControllerDelegate, U
         present(actionSheet, animated: true, completion: nil)
     }
     
+    
+    
+    // Save photo to library.
     private func savePhoto() {
         let image = tappedImageView.image!
         
         UIImageWriteToSavedPhotosAlbum(image, self, #selector(image(_:didFinishSavingWithError:contextInfo:)), nil)
     }
     
-    // Save photo completion.
     @objc func image(_ image: UIImage, didFinishSavingWithError error: NSError?, contextInfo: UnsafeRawPointer) {
         if let error = error {
             
@@ -183,10 +225,13 @@ class SecondViewController: UIViewController, UIImagePickerControllerDelegate, U
         }
     }
     
+    
+    
+    // Delete certain photo.
     private func removePhoto() {
         
         let ac = UIAlertController(title: nil, message: "Remove photo?", preferredStyle: .alert)
-        ac.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        ac.addAction(UIAlertAction(title: "Cancel", style: .default, handler: nil))
         ac.addAction(UIAlertAction(title: "Yes", style: .destructive, handler: { _ in
             
             self.currentPhotoNum -= 1
@@ -194,6 +239,7 @@ class SecondViewController: UIViewController, UIImagePickerControllerDelegate, U
             self.stackView.removeArrangedSubview(self.tappedImageView)
             self.tappedImageView.removeFromSuperview()
             
+            // If no photo left, hide buttons.
             if self.currentPhotoNum == 0 {
                 self.processButton.isHidden = true
                 self.startOverButton.isHidden = true
@@ -206,44 +252,181 @@ class SecondViewController: UIViewController, UIImagePickerControllerDelegate, U
         present(ac, animated: true)
     }
     
-    private func addBorder(view: UIImageView) {
-        view.layer.borderWidth = 4
-        view.layer.borderColor = UIColor.black.cgColor
+    
+    
+    
+    // Identification and calculation.
+    
+    @IBAction func processPhotos(_ sender: Any) {
+        
+        // Clear previous results
+        clfLabel.removeAll()
+        clfConf.removeAll()
+        
+        
+        
+        // Present alert based on tapped button.
+        let message = "Use these photos for type identification?"
+        
+        let alert = UIAlertController(title: nil, message: message, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { _ in
+            
+            
+            
+            // Find images in stack view and process accordingly.
+            // Keep count of processed photos.
+            var n = 0
+            for subview in self.stackView.arrangedSubviews {
+                
+                // All photos processed.
+                if n == self.currentPhotoNum {
+                    break
+                }
+                
+                // Find image views.
+                if type(of: subview) == UIImageView.self {
+                    
+                    let image = (subview as! UIImageView).image
+                    
+                    
+                    self.classify(image: image!)
+                    
+                    
+                    n += 1
+                }
+            }
+            
+
+            self.performSegue(withIdentifier: "toLeafResults", sender: nil)
+            
+        }))
+        
+        present(alert, animated: true, completion: nil)
     }
     
-    private func removeBorder(view: UIImageView) {
-        view.layer.borderWidth = 0
+    
+    
+    
+    
+    
+    // Remove all current photos.
+    @IBAction func startOver(_ sender: Any) {
+        
+        let ac = UIAlertController(title: "Start Over", message: "Discard all current photos?", preferredStyle: .alert)
+        ac.addAction(UIAlertAction(title: "Cancel", style: .default, handler: nil))
+        ac.addAction(UIAlertAction(title: "Yes", style: .destructive, handler: { _ in
+            
+            self.currentPhotoNum = 0
+            self.processButton.isHidden = true
+            self.startOverButton.isHidden = true
+            
+            for subview in self.stackView.arrangedSubviews {
+                if type(of: subview) == UIImageView.self {
+                    self.stackView.removeArrangedSubview(subview)
+                    subview.removeFromSuperview()
+                }
+            }
+            
+            
+            // Add back the initial placeholder.
+            self.addImageView()
+        }))
+        present(ac, animated: true)
     }
     
-    // MARK: - Delegates
     
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    // MARK: - Image Classification
+    
+    func classify(image: UIImage) {
         
-        // Local variable inserted by Swift 4.2 migrator.
-        let info = convertFromUIImagePickerControllerInfoKeyDictionary(info)
+        guard let ciImage = CIImage(image: image) else {
+            fatalError("Failed to convert UIImage into CIImage.")
+        }
         
-        let image = info[convertFromUIImagePickerControllerInfoKey(UIImagePickerController.InfoKey.originalImage)] as! UIImage
+        guard let model = try? VNCoreMLModel(for: TreeClassifier().model) else {
+            fatalError("Failed to load model.")
+        }
         
-        processButton.isHidden = false
-        startOverButton.isHidden = false
         
-        addBorder(view: tappedImageView)
-        tappedImageView.image = image
-        
-        // Determine if a new photo is added or an old one changed.
-        if tappedImageViewIndex == 2 + currentPhotoNum {
-            currentPhotoNum += 1
-            if currentPhotoNum < 4 {
-                addImageView()
+        let request = VNCoreMLRequest(model: model) { (request, error) in
+            guard let results = request.results as? [VNClassificationObservation] else {
+                fatalError("Failed to load results.")
+            }
+            
+            if let topResult = results.first {
+                self.clfLabel.append(topResult.identifier)
+                self.clfConf.append(topResult.confidence)
             }
         }
         
-        picker.dismiss(animated: true, completion: nil)
+        let handler = VNImageRequestHandler(ciImage: ciImage)
+        
+        do {
+            try handler.perform([request])
+        }
+        catch {
+            self.presentError(error.localizedDescription + "\nPlease try again.")
+        }
     }
     
-    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
-        picker.dismiss(animated: true, completion: nil)
+    
+    
+    
+    
+    
+    
+  
+ 
+    
+    
+    // Prepare for result segues.
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        
+        // Type ID.
+        if segue.identifier == "toLeafResults" {
+            if let des = segue.destination as? UINavigationController {
+                if let vc = des.topViewController as? LeafResultsViewController {
+                    
+                    var maxConf = Float(-1)
+                    var type = ""
+                    for i in 0..<currentPhotoNum {
+                        if clfConf[i] > maxConf {
+                            maxConf = clfConf[i]
+                            type = clfLabel[i]
+                        }
+                    }
+                    
+                    vc.typeText = type
+                    vc.confText = String(Int(maxConf*100))+"%"
+                    vc.confColor = (maxConf > 0.5) ? UIColor.blue : UIColor(red: 128/255, green: 0, blue: 0, alpha: 1)
+                }
+            }
+        }
+        
+       
     }
+    
+    
+    
+    
+    private func presentError(_ message: String) {
+        let ac = UIAlertController(title: "Error", message: message, preferredStyle: .alert)
+        ac.addAction(UIAlertAction(title: "OK", style: .destructive, handler: nil))
+        present(ac, animated: true)
+    }
+    
+    
+    
     
 }
 

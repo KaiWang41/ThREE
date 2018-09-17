@@ -37,7 +37,9 @@ class FirstViewController: UIViewController, UIImagePickerControllerDelegate, UI
     // Size calculation.
     var surfaceAreas = [CGFloat]()
     var canopySizes = [CGFloat]()
-    var waterVolumes = [CGFloat]()
+    let trunkCanopyRatio = CGFloat(0.045)
+    let meterInchRatio = CGFloat(39.37)
+    let gallonLiterRatio = CGFloat(3.7854)
     
     // Text board size in metres.
     let boardWidth: CGFloat = 1.1
@@ -276,7 +278,6 @@ class FirstViewController: UIViewController, UIImagePickerControllerDelegate, UI
         clfConf.removeAll()
         surfaceAreas.removeAll()
         canopySizes.removeAll()
-        waterVolumes.removeAll()
         
         
         
@@ -325,42 +326,6 @@ class FirstViewController: UIViewController, UIImagePickerControllerDelegate, UI
     }
     
     
-    // Prepare for result segues.
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-
-        // Type ID.
-        if segue.identifier == "toTreeResults" {
-            if let des = segue.destination as? UINavigationController {
-                if let vc = des.topViewController as? TreeResultsViewController {
-
-                    var maxConf = Float(-1)
-                    var type = ""
-                    for i in 0..<currentPhotoNum {
-                        if clfConf[i] > maxConf {
-                            maxConf = clfConf[i]
-                            type = clfLabel[i]
-                        }
-                    }
-
-                    vc.typeText = type
-                    vc.confText = String(Int(maxConf*100))+"%"
-                    vc.confColor = (maxConf > 0.5) ? UIColor.blue : UIColor(red: 128/255, green: 0, blue: 0, alpha: 1)
-                }
-            }
-        }
-        
-        // Size calculation.
-        if segue.identifier == "toSizeResults" {
-            let vc = (segue.destination as! UINavigationController).topViewController as! TreeSizeResultsViewController
-            
-            // Average over all photos.
-            let avgArea = getAvg(array: surfaceAreas)
-            let avgSize = getAvg(array: canopySizes)
-            vc.areaText = String(Int(avgArea)) + " m²"
-            vc.sizeText = String(Int(avgSize)) + " m³"
-            vc.waterText = "666 L"
-        }
-    }
     
     
     
@@ -434,6 +399,9 @@ class FirstViewController: UIViewController, UIImagePickerControllerDelegate, UI
             self.presentError(error.localizedDescription + "\nPlease try again.")
         }
     }
+    
+    
+    
     
     
     
@@ -531,7 +499,6 @@ class FirstViewController: UIViewController, UIImagePickerControllerDelegate, UI
         
         var area: CGFloat = 0
         var size: CGFloat = 0
-        var water: CGFloat = 0
         
         // Count green pixels for each row.
         
@@ -624,6 +591,50 @@ class FirstViewController: UIViewController, UIImagePickerControllerDelegate, UI
         return sum/CGFloat(array.count)
     }
 
+    
+    
+    
+    
+    
+    
+    // Prepare for result segues.
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        
+        // Type ID.
+        if segue.identifier == "toTreeResults" {
+            if let des = segue.destination as? UINavigationController {
+                if let vc = des.topViewController as? TreeResultsViewController {
+                    
+                    var maxConf = Float(-1)
+                    var type = ""
+                    for i in 0..<currentPhotoNum {
+                        if clfConf[i] > maxConf {
+                            maxConf = clfConf[i]
+                            type = clfLabel[i]
+                        }
+                    }
+                    
+                    vc.typeText = type
+                    vc.confText = String(Int(maxConf*100))+"%"
+                    vc.confColor = (maxConf > 0.5) ? UIColor.blue : UIColor(red: 128/255, green: 0, blue: 0, alpha: 1)
+                }
+            }
+        }
+        
+        // Size calculation.
+        if segue.identifier == "toSizeResults" {
+            let vc = (segue.destination as! UINavigationController).topViewController as! TreeSizeResultsViewController
+            
+            // Average over all photos.
+            let avgArea = getAvg(array: surfaceAreas)
+            let avgSize = getAvg(array: canopySizes)
+            let water = (avgArea / 4 / CGFloat.pi).squareRoot() * 2 * trunkCanopyRatio * meterInchRatio * 10 * gallonLiterRatio
+            vc.areaText = String(Int(avgArea)) + " m²"
+            vc.sizeText = String(Int(avgSize)) + " m³"
+            vc.waterText = String(Int(water)) + " L p/w"
+        }
+    }
+    
     
 }
 
