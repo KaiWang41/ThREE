@@ -16,12 +16,14 @@ class TreeResultsViewController: UIViewController {
     @IBOutlet weak var typeLabel: UILabel!
     @IBOutlet weak var confidenceLabel: UILabel!
 
-    
+    // Values passed from segue.
     var resultsSaved = false
     var typeText = ""
     var confText = ""
     var confColor = UIColor.white
     
+    
+    // Set texts based on segue.
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
 
@@ -40,6 +42,7 @@ class TreeResultsViewController: UIViewController {
         ac.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
         ac.addAction(UIAlertAction(title: "Yes", style: .default, handler: { alert in
             
+            // Save the view as image.
             let renderer = UIGraphicsImageRenderer(size: self.stackView.bounds.size)
             let image = renderer.image { ctx in
                 self.stackView.drawHierarchy(in: self.stackView.bounds, afterScreenUpdates: true)
@@ -101,6 +104,7 @@ class TreeResultsViewController: UIViewController {
         }
     }
     
+    // Close and go to another tab.
     private func dismissAndChangeTab() {
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         let tabBarController = appDelegate.window?.rootViewController as! UITabBarController
