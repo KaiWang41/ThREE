@@ -46,8 +46,6 @@ class FirstViewController: UIViewController, UIImagePickerControllerDelegate, UI
     let boardHeight: CGFloat = 0.3
     
 
-    
-    
     override func viewDidLoad() {
         super.viewDidLoad()
  
@@ -56,7 +54,6 @@ class FirstViewController: UIViewController, UIImagePickerControllerDelegate, UI
         
         // Add initial image place holder.
         addImageView()
-
     }
     
     
@@ -174,8 +171,9 @@ class FirstViewController: UIViewController, UIImagePickerControllerDelegate, UI
     
     // Border for photos added.
     private func addBorder(view: UIImageView) {
-        view.layer.borderWidth = 4
-        view.layer.borderColor = UIColor.black.cgColor
+//        view.layer.borderWidth = 4
+//        view.layer.borderColor = UIColor.black.cgColor
+        return
     }
     
     private func removeBorder(view: UIImageView) {
@@ -318,7 +316,11 @@ class FirstViewController: UIViewController, UIImagePickerControllerDelegate, UI
             if (self.processButton == (sender as! UIButton)) {
                 self.performSegue(withIdentifier: "toTreeResults", sender: nil)
             } else {
-                self.performSegue(withIdentifier: "toSizeResults", sender: nil)
+                if self.surfaceAreas.count > 0 {
+                    self.performSegue(withIdentifier: "toSizeResults", sender: nil)
+                } else {
+                    self.presentError("Failed to detect text board.\nPlease make sure it is clearly visible, and avoid other texts in photo.")
+                }
             }
         }))
         
@@ -441,14 +443,7 @@ class FirstViewController: UIViewController, UIImagePickerControllerDelegate, UI
                     }
                 }
             }
-            if count < 1 {
-                self.presentError("Failed to detect text board. Please try and make it clearly visible.")
-                return
-            }
-            if count > 1 {
-                self.presentError("Failed to detect text board. Please try and avoid other texts in the photo.")
-                return
-            }
+            if count != 1 { return }
             
             // Get text observation bounding and scale.
             if let box = targetObservation?.boundingBox {

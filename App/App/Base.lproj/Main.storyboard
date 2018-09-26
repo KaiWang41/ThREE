@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14313.3.2" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="49e-Tb-3d3">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14313.18" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="49e-Tb-3d3">
     <device id="retina5_9" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14283.1"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14283.14"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Identification-->
+        <!--Tree Type-->
         <scene sceneID="WKd-xH-Vjf">
             <objects>
                 <viewController id="ZG6-Pn-EgQ" customClass="TreeResultsViewController" customModule="App" customModuleProvider="target" sceneMemberID="viewController">
@@ -182,13 +182,15 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="AR0-0R-neN"/>
                     </view>
-                    <navigationItem key="navigationItem" title="Identification" id="lPf-7L-Ai2">
+                    <navigationItem key="navigationItem" title="Tree Type" id="lPf-7L-Ai2">
                         <barButtonItem key="leftBarButtonItem" systemItem="save" id="56Q-os-cSA">
+                            <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <connections>
                                 <action selector="onSave:" destination="ZG6-Pn-EgQ" id="0oS-tn-5sc"/>
                             </connections>
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" style="done" systemItem="done" id="miF-Bj-fbB">
+                            <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <connections>
                                 <action selector="onDone:" destination="ZG6-Pn-EgQ" id="FjH-HL-kuG"/>
                             </connections>
@@ -333,11 +335,13 @@ Unicode: U+00B3, UTF-8: C2 B3</string>
                     </view>
                     <navigationItem key="navigationItem" title="Canopy Size" id="M0b-sX-2ZF">
                         <barButtonItem key="leftBarButtonItem" systemItem="save" id="kc1-bd-DrB">
+                            <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <connections>
                                 <action selector="onSave:" destination="VnJ-Cm-V84" id="LVa-7w-lW7"/>
                             </connections>
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" style="done" systemItem="done" id="ye5-BJ-zdo">
+                            <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <connections>
                                 <action selector="onDone:" destination="VnJ-Cm-V84" id="hYz-p5-5bn"/>
                             </connections>
@@ -432,14 +436,13 @@ Unicode: U+00B3, UTF-8: C2 B3</string>
                                                     </userDefinedRuntimeAttribute>
                                                 </userDefinedRuntimeAttributes>
                                             </view>
-                                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Oxp-vb-2Cf">
+                                            <button hidden="YES" opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Oxp-vb-2Cf">
                                                 <rect key="frame" x="37.666666666666657" y="252" width="300" height="50"/>
                                                 <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="300" id="i16-aO-kJs"/>
                                                     <constraint firstAttribute="height" constant="50" id="qVm-NL-m1K"/>
                                                 </constraints>
-                                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                                                 <state key="normal" title="Identify Type">
                                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 </state>
@@ -447,14 +450,13 @@ Unicode: U+00B3, UTF-8: C2 B3</string>
                                                     <action selector="processPhotos:" destination="9pv-A4-QxB" eventType="touchUpInside" id="ZvI-P4-kPI"/>
                                                 </connections>
                                             </button>
-                                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZhG-Rm-gUL">
+                                            <button hidden="YES" opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZhG-Rm-gUL">
                                                 <rect key="frame" x="37.666666666666657" y="252" width="300" height="50"/>
                                                 <color key="backgroundColor" red="0.0" green="0.40000000000000002" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="50" id="BMY-gz-x0E"/>
                                                     <constraint firstAttribute="width" constant="300" id="oiz-8d-W7E"/>
                                                 </constraints>
-                                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                                                 <state key="normal" title="Calculate Size">
                                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 </state>
@@ -462,14 +464,13 @@ Unicode: U+00B3, UTF-8: C2 B3</string>
                                                     <action selector="processPhotos:" destination="9pv-A4-QxB" eventType="touchUpInside" id="4Qj-P3-bse"/>
                                                 </connections>
                                             </button>
-                                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="B5J-Ib-YsY">
+                                            <button hidden="YES" opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="B5J-Ib-YsY">
                                                 <rect key="frame" x="37.666666666666657" y="252" width="300" height="50"/>
                                                 <color key="backgroundColor" red="0.66666668650000005" green="0.16338964559999999" blue="0.20486332360000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="50" id="0ok-VH-8Il"/>
                                                     <constraint firstAttribute="width" constant="300" id="iaG-cB-j0P"/>
                                                 </constraints>
-                                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                                                 <state key="normal" title="Start Over">
                                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 </state>
@@ -556,9 +557,9 @@ Unicode: U+00B3, UTF-8: C2 B3</string>
                                                                 </constraints>
                                                             </imageView>
                                                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" editable="NO" textAlignment="center" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hBR-Xc-m9B">
-                                                                <rect key="frame" x="1" y="36.66666666666665" width="286.66666666666669" height="116.33333333333331"/>
+                                                                <rect key="frame" x="3.6666666666666572" y="36.66666666666665" width="281.33333333333337" height="116.33333333333331"/>
                                                                 <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
-                                                                <string key="text">Make the tree fill as much of the photo as possible.  (For type identification only) Place the text board provided by ThREE next to the tree as the example below:</string>
+                                                                <string key="text">Make the tree fill as much of the photo as possible.  (For size calculation only) Place the text board provided by ThREE next to the tree as the example below:</string>
                                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                                             </textView>
@@ -612,6 +613,7 @@ Unicode: U+00B3, UTF-8: C2 B3</string>
                     </view>
                     <navigationItem key="navigationItem" title="Requirements" id="j5D-7h-Mhx">
                         <barButtonItem key="rightBarButtonItem" style="done" systemItem="done" id="mNo-iw-0zr">
+                            <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <connections>
                                 <action selector="pressDone:" destination="SaR-ve-F6E" id="Pwi-Bq-boW"/>
                             </connections>
@@ -757,7 +759,7 @@ Unicode: U+00B3, UTF-8: C2 B3</string>
             </objects>
             <point key="canvasLocation" x="1924" y="905.9113300492611"/>
         </scene>
-        <!--Identification-->
+        <!--Tree Type-->
         <scene sceneID="V3c-xN-Aoa">
             <objects>
                 <viewController id="uhk-C3-Yqq" customClass="LeafResultsViewController" customModule="App" customModuleProvider="target" sceneMemberID="viewController">
@@ -930,13 +932,15 @@ Unicode: U+00B3, UTF-8: C2 B3</string>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="gjj-gJ-aHq"/>
                     </view>
-                    <navigationItem key="navigationItem" title="Identification" id="yh6-dg-Z8L">
+                    <navigationItem key="navigationItem" title="Tree Type" id="yh6-dg-Z8L">
                         <barButtonItem key="leftBarButtonItem" systemItem="save" id="NZf-so-eFM">
+                            <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <connections>
                                 <action selector="onSave:" destination="uhk-C3-Yqq" id="gcY-Ib-kyR"/>
                             </connections>
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" style="done" systemItem="done" id="Bq4-oF-vpE">
+                            <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <connections>
                                 <action selector="onDone:" destination="uhk-C3-Yqq" id="UMd-a7-Kdh"/>
                             </connections>
@@ -961,7 +965,7 @@ Unicode: U+00B3, UTF-8: C2 B3</string>
                     <tabBar key="tabBar" contentMode="scaleToFill" id="W28-zg-YXA">
                         <rect key="frame" x="0.0" y="975" width="768" height="49"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
-                        <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="selectedImageTintColor" red="0.0" green="0.40000000000000002" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
                     </tabBar>
                     <connections>
                         <segue destination="SDP-iV-hXL" kind="relationship" relationship="viewControllers" id="u7Y-xg-7CH"/>
@@ -981,6 +985,10 @@ Unicode: U+00B3, UTF-8: C2 B3</string>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="Qnk-15-pdI">
                         <rect key="frame" x="0.0" y="44" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
+                        <color key="barTintColor" red="0.0" green="0.40000000000000002" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
+                        <textAttributes key="titleTextAttributes">
+                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        </textAttributes>
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
@@ -999,6 +1007,10 @@ Unicode: U+00B3, UTF-8: C2 B3</string>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="GOr-Du-OPh">
                         <rect key="frame" x="0.0" y="44" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
+                        <color key="barTintColor" red="0.0" green="0.40000000000000002" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
+                        <textAttributes key="titleTextAttributes">
+                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        </textAttributes>
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
@@ -1018,6 +1030,10 @@ Unicode: U+00B3, UTF-8: C2 B3</string>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="BAp-kj-0V5">
                         <rect key="frame" x="0.0" y="44" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
+                        <color key="barTintColor" red="0.0" green="0.40000000000000002" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
+                        <textAttributes key="titleTextAttributes">
+                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        </textAttributes>
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
@@ -1036,6 +1052,10 @@ Unicode: U+00B3, UTF-8: C2 B3</string>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="JRt-nu-ibe">
                         <rect key="frame" x="0.0" y="44" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
+                        <color key="barTintColor" red="0.0" green="0.40000000000000002" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
+                        <textAttributes key="titleTextAttributes">
+                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        </textAttributes>
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
@@ -1054,6 +1074,10 @@ Unicode: U+00B3, UTF-8: C2 B3</string>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="rkQ-ff-iJU">
                         <rect key="frame" x="0.0" y="44" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
+                        <color key="barTintColor" red="0.0" green="0.40000000000000002" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
+                        <textAttributes key="titleTextAttributes">
+                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        </textAttributes>
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
@@ -1072,6 +1096,10 @@ Unicode: U+00B3, UTF-8: C2 B3</string>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="ASI-qj-7aY">
                         <rect key="frame" x="0.0" y="44" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
+                        <color key="barTintColor" red="0.0" green="0.40000000000000002" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
+                        <textAttributes key="titleTextAttributes">
+                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        </textAttributes>
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
@@ -1087,10 +1115,10 @@ Unicode: U+00B3, UTF-8: C2 B3</string>
         <image name="Measurement" width="329" height="325"/>
         <image name="Oak_leaf_sample" width="204" height="135"/>
         <image name="first" width="32" height="32"/>
-        <image name="leaves" width="26" height="26"/>
+        <image name="leaves" width="20" height="20"/>
         <image name="oak_tree_sample" width="392" height="375"/>
         <image name="second" width="32" height="32"/>
         <image name="tree_sample" width="477" height="356"/>
-        <image name="trees" width="26" height="26"/>
+        <image name="trees" width="20" height="20"/>
     </resources>
 </document>
