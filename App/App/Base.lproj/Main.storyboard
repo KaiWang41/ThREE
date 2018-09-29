@@ -117,7 +117,7 @@
                                                                     <constraint firstAttribute="width" constant="32" id="jrf-xI-Y6T"/>
                                                                 </constraints>
                                                             </imageView>
-                                                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" editable="NO" text="You can also upload photos of the leaves for a second opinion on the tree type." textAlignment="center" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mao-Vl-ah3">
+                                                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" editable="NO" text="Identification accuracy is higher with photos of the tree's leaves:" textAlignment="center" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mao-Vl-ah3">
                                                                 <rect key="frame" x="15" y="36" width="258.66666666666669" height="83"/>
                                                                 <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                                                                 <constraints>
@@ -659,7 +659,7 @@ Unicode: U+00B3, UTF-8: C2 B3</string>
                                                                     <constraint firstAttribute="width" constant="32" id="rqr-HK-jly"/>
                                                                 </constraints>
                                                             </imageView>
-                                                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" editable="NO" text="Supply photos of the leaf/leaves of the tree to ID its type using leaf characteristics." textAlignment="center" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8mp-M3-JN5">
+                                                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" editable="NO" text="Supply photos of the leaf/leaves of the tree to ID its type with superior accuracy." textAlignment="center" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8mp-M3-JN5">
                                                                 <rect key="frame" x="15" y="70" width="258.66666666666669" height="83"/>
                                                                 <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                                                                 <constraints>
@@ -859,7 +859,7 @@ Unicode: U+00B3, UTF-8: C2 B3</string>
                                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" alignment="center" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="m83-ah-9Gy">
                                                         <rect key="frame" x="6" y="22" width="289" height="137"/>
                                                         <subviews>
-                                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="leaves" translatesAutoresizingMaskIntoConstraints="NO" id="mS3-AB-6qf">
+                                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="trees" translatesAutoresizingMaskIntoConstraints="NO" id="mS3-AB-6qf">
                                                                 <rect key="frame" x="128.33333333333334" y="0.0" width="32" height="32"/>
                                                                 <constraints>
                                                                     <constraint firstAttribute="height" constant="32" id="1Wd-ol-kO7"/>

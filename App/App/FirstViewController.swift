@@ -240,10 +240,7 @@ class FirstViewController: UIViewController, UIImagePickerControllerDelegate, UI
     
     // Delete certain photo.
     private func removePhoto() {
-        
-        let ac = UIAlertController(title: nil, message: "Remove photo?", preferredStyle: .alert)
-        ac.addAction(UIAlertAction(title: "Cancel", style: .default, handler: nil))
-        ac.addAction(UIAlertAction(title: "Yes", style: .destructive, handler: { _ in
+
             
             self.currentPhotoNum -= 1
             
@@ -260,8 +257,7 @@ class FirstViewController: UIViewController, UIImagePickerControllerDelegate, UI
             if self.currentPhotoNum == 3 {
                 self.addImageView()
             }
-        }))
-        present(ac, animated: true)
+
     }
     
     
@@ -376,7 +372,7 @@ class FirstViewController: UIViewController, UIImagePickerControllerDelegate, UI
             fatalError("Failed to convert UIImage into CIImage.")
         }
         
-        guard let model = try? VNCoreMLModel(for: TreeClassifier().model) else {
+        guard let model = try? VNCoreMLModel(for: Tree().model) else {
             fatalError("Failed to load model.")
         }
 
@@ -611,7 +607,16 @@ class FirstViewController: UIViewController, UIImagePickerControllerDelegate, UI
                     
                     vc.typeText = type
                     vc.confText = String(Int(maxConf*100))+"%"
-                    vc.confColor = (maxConf > 0.5) ? UIColor.blue : UIColor(red: 128/255, green: 0, blue: 0, alpha: 1)
+                    
+                    // Confidence label color
+                    if maxConf > 2.0/3.0 {
+                        vc.confColor = UIColor.blue
+                    } else if maxConf > 1.0/3.0 {
+                        vc.confColor = UIColor.orange
+                    } else {
+                        vc.confColor = UIColor(red: 128/255, green: 0, blue: 0, alpha: 1)
+                    }
+
                 }
             }
         }

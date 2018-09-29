@@ -20,6 +20,8 @@
 		379A8F19214A3B260093270F /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 379A8F18214A3B260093270F /* Utilities.swift */; };
 		379A8F1B214F5B740093270F /* LeafResultsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 379A8F1A214F5B740093270F /* LeafResultsViewController.swift */; };
 		37A8C696214A0FB300E72122 /* TreeSizeResultsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37A8C695214A0FB300E72122 /* TreeSizeResultsViewController.swift */; };
+		37E075A5215F284100F4608E /* Tree.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = 37E075A4215F284100F4608E /* Tree.mlmodel */; };
+		37E075A7215F284D00F4608E /* Leaf.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = 37E075A6215F284D00F4608E /* Leaf.mlmodel */; };
 		6743A8ED6D661299A905B1E4 /* Pods_App.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CA0FBE9D118BAB99A89C6870 /* Pods_App.framework */; };
 /* End PBXBuildFile section */
 
@@ -39,6 +41,8 @@
 		379A8F18214A3B260093270F /* Utilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utilities.swift; sourceTree = "<group>"; };
 		379A8F1A214F5B740093270F /* LeafResultsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeafResultsViewController.swift; sourceTree = "<group>"; };
 		37A8C695214A0FB300E72122 /* TreeSizeResultsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TreeSizeResultsViewController.swift; sourceTree = "<group>"; };
+		37E075A4215F284100F4608E /* Tree.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; name = Tree.mlmodel; path = ../../Tree.mlmodel; sourceTree = "<group>"; };
+		37E075A6215F284D00F4608E /* Leaf.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; name = Leaf.mlmodel; path = ../../Leaf.mlmodel; sourceTree = "<group>"; };
 		99BD3921F70EA463E47F9271 /* Pods-App.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-App.release.xcconfig"; path = "Pods/Target Support Files/Pods-App/Pods-App.release.xcconfig"; sourceTree = "<group>"; };
 		CA0FBE9D118BAB99A89C6870 /* Pods_App.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_App.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D8D355A9A27885A98D4A252B /* Pods-App.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-App.debug.xcconfig"; path = "Pods/Target Support Files/Pods-App/Pods-App.debug.xcconfig"; sourceTree = "<group>"; };
@@ -77,6 +81,8 @@
 		37331A2B212E931C0007AD4B /* App */ = {
 			isa = PBXGroup;
 			children = (
+				37E075A6215F284D00F4608E /* Leaf.mlmodel */,
+				37E075A4215F284100F4608E /* Tree.mlmodel */,
 				3798FBAB2142467F003B87CA /* CGImagePropertyOrientation+UIImageOrientation.swift */,
 				3798FBA9214243B5003B87CA /* TreeClassifier.mlmodel */,
 				37331A2C212E931C0007AD4B /* AppDelegate.swift */,
@@ -206,7 +212,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				37E075A7215F284D00F4608E /* Leaf.mlmodel in Sources */,
 				37331A31212E931C0007AD4B /* SecondViewController.swift in Sources */,
+				37E075A5215F284100F4608E /* Tree.mlmodel in Sources */,
 				379A8F1B214F5B740093270F /* LeafResultsViewController.swift in Sources */,
 				3798FBAA214243B5003B87CA /* TreeClassifier.mlmodel in Sources */,
 				37A8C696214A0FB300E72122 /* TreeSizeResultsViewController.swift in Sources */,

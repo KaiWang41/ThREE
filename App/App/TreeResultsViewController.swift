@@ -30,6 +30,26 @@ class TreeResultsViewController: UIViewController {
         typeLabel.text = typeText
         confidenceLabel.text = confText
         confidenceLabel.textColor = confColor
+        
+        // Configure sample image
+        typeText = typeText.lowercased()
+        treeImage.image = UIImage(named: typeText)
+        let leafText = typeText + "_leaf"
+        leafImage.image = UIImage(named: leafText)
+        
+        // Common names
+        switch typeText {
+        case "planatus":
+            typeLabel.text = "Plane Tree"
+        case "ulmus":
+            typeLabel.text = "Elm Tree"
+        case "corymbia":
+            typeLabel.text = "Gum Tree"
+        case "quercus":
+            typeLabel.text = "Oak"
+        default:
+            ()
+        }
     }
 
     override func viewDidLoad() {

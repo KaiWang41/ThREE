@@ -142,9 +142,6 @@ class SecondViewController: UIViewController, UIImagePickerControllerDelegate, U
         processButton.isHidden = false
         startOverButton.isHidden = false
         
-        
-        // Show photo in the bordered frame.
-        addBorder(view: tappedImageView)
         tappedImageView.image = image
         
         // Determine if a new photo is added or an old one changed and update the number.
@@ -230,9 +227,7 @@ class SecondViewController: UIViewController, UIImagePickerControllerDelegate, U
     // Delete certain photo.
     private func removePhoto() {
         
-        let ac = UIAlertController(title: nil, message: "Remove photo?", preferredStyle: .alert)
-        ac.addAction(UIAlertAction(title: "Cancel", style: .default, handler: nil))
-        ac.addAction(UIAlertAction(title: "Yes", style: .destructive, handler: { _ in
+        
             
             self.currentPhotoNum -= 1
             
@@ -248,8 +243,7 @@ class SecondViewController: UIViewController, UIImagePickerControllerDelegate, U
             if self.currentPhotoNum == 3 {
                 self.addImageView()
             }
-        }))
-        present(ac, animated: true)
+
     }
     
     
@@ -353,7 +347,7 @@ class SecondViewController: UIViewController, UIImagePickerControllerDelegate, U
             fatalError("Failed to convert UIImage into CIImage.")
         }
         
-        guard let model = try? VNCoreMLModel(for: TreeClassifier().model) else {
+        guard let model = try? VNCoreMLModel(for: Leaf().model) else {
             fatalError("Failed to load model.")
         }
         
@@ -408,7 +402,13 @@ class SecondViewController: UIViewController, UIImagePickerControllerDelegate, U
                     
                     vc.typeText = type
                     vc.confText = String(Int(maxConf*100))+"%"
-                    vc.confColor = (maxConf > 0.5) ? UIColor.blue : UIColor(red: 128/255, green: 0, blue: 0, alpha: 1)
+                    if maxConf > 2.0/3.0 {
+                        vc.confColor = UIColor.blue
+                    } else if maxConf > 1.0/3.0 {
+                        vc.confColor = UIColor.orange
+                    } else {
+                        vc.confColor = UIColor(red: 128/255, green: 0, blue: 0, alpha: 1)
+                    }
                 }
             }
         }
