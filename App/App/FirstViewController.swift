@@ -54,6 +54,11 @@ class FirstViewController: UIViewController, UIImagePickerControllerDelegate, UI
         
         // Add initial image place holder.
         addImageView()
+        
+        // Button border
+        processButton.layer.cornerRadius = 5
+        calculateButton.layer.cornerRadius = 5
+        startOverButton.layer.cornerRadius = 5
     }
     
     
