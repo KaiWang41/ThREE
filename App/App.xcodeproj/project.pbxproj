@@ -15,7 +15,6 @@
 		37331A36212E931D0007AD4B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 37331A35212E931D0007AD4B /* Assets.xcassets */; };
 		37331A39212E931D0007AD4B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 37331A37212E931D0007AD4B /* LaunchScreen.storyboard */; };
 		3798FBA621422289003B87CA /* TreeResultsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3798FBA521422289003B87CA /* TreeResultsViewController.swift */; };
-		3798FBAA214243B5003B87CA /* TreeClassifier.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = 3798FBA9214243B5003B87CA /* TreeClassifier.mlmodel */; };
 		3798FBAC2142467F003B87CA /* CGImagePropertyOrientation+UIImageOrientation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3798FBAB2142467F003B87CA /* CGImagePropertyOrientation+UIImageOrientation.swift */; };
 		379A8F19214A3B260093270F /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 379A8F18214A3B260093270F /* Utilities.swift */; };
 		379A8F1B214F5B740093270F /* LeafResultsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 379A8F1A214F5B740093270F /* LeafResultsViewController.swift */; };
@@ -36,7 +35,6 @@
 		37331A38212E931D0007AD4B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		37331A3A212E931D0007AD4B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3798FBA521422289003B87CA /* TreeResultsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TreeResultsViewController.swift; sourceTree = "<group>"; };
-		3798FBA9214243B5003B87CA /* TreeClassifier.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = TreeClassifier.mlmodel; sourceTree = "<group>"; };
 		3798FBAB2142467F003B87CA /* CGImagePropertyOrientation+UIImageOrientation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CGImagePropertyOrientation+UIImageOrientation.swift"; sourceTree = "<group>"; };
 		379A8F18214A3B260093270F /* Utilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utilities.swift; sourceTree = "<group>"; };
 		379A8F1A214F5B740093270F /* LeafResultsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeafResultsViewController.swift; sourceTree = "<group>"; };
@@ -84,7 +82,6 @@
 				37E075A6215F284D00F4608E /* Leaf.mlmodel */,
 				37E075A4215F284100F4608E /* Tree.mlmodel */,
 				3798FBAB2142467F003B87CA /* CGImagePropertyOrientation+UIImageOrientation.swift */,
-				3798FBA9214243B5003B87CA /* TreeClassifier.mlmodel */,
 				37331A2C212E931C0007AD4B /* AppDelegate.swift */,
 				37331A2E212E931C0007AD4B /* FirstViewController.swift */,
 				37331A30212E931C0007AD4B /* SecondViewController.swift */,
@@ -216,7 +213,6 @@
 				37331A31212E931C0007AD4B /* SecondViewController.swift in Sources */,
 				37E075A5215F284100F4608E /* Tree.mlmodel in Sources */,
 				379A8F1B214F5B740093270F /* LeafResultsViewController.swift in Sources */,
-				3798FBAA214243B5003B87CA /* TreeClassifier.mlmodel in Sources */,
 				37A8C696214A0FB300E72122 /* TreeSizeResultsViewController.swift in Sources */,
 				3798FBAC2142467F003B87CA /* CGImagePropertyOrientation+UIImageOrientation.swift in Sources */,
 				37331A2D212E931C0007AD4B /* AppDelegate.swift in Sources */,
