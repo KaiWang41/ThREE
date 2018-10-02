@@ -10,6 +10,7 @@ import UIKit
 import CoreML
 import Vision
 import ImageIO
+import KRProgressHUD
 
 class FirstViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate{
 
@@ -33,6 +34,7 @@ class FirstViewController: UIViewController, UIImagePickerControllerDelegate, UI
     // Classification for each photo.
     var clfLabel = [String]()
     var clfConf = [Float]()
+    var clfErr = ""
     
     // Size calculation.
     var surfaceAreas = [CGFloat]()
@@ -40,6 +42,7 @@ class FirstViewController: UIViewController, UIImagePickerControllerDelegate, UI
     let trunkCanopyRatio = CGFloat(0.045)
     let meterInchRatio = CGFloat(39.37)
     let gallonLiterRatio = CGFloat(3.7854)
+    var calErr = ""
     
     // Text board size in metres.
     let boardWidth: CGFloat = 1.1
@@ -66,7 +69,7 @@ class FirstViewController: UIViewController, UIImagePickerControllerDelegate, UI
     
     
     // Add image view to the stack view for new photos.
-    private func addImageView() {
+    func addImageView() {
         
         // Constraints.
         let imageView = UIImageView()
@@ -77,13 +80,8 @@ class FirstViewController: UIViewController, UIImagePickerControllerDelegate, UI
         let heightConstraint = NSLayoutConstraint(item: imageView, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 300)
         imageView.addConstraint(widthConstraint)
         imageView.addConstraint(heightConstraint)
-        
-        // If it's the first photo or not.
-        if currentPhotoNum == 0 {
-            imageView.image = UIImage(named: "Picture1")
-        } else {
-            imageView.image = UIImage(named: "Picture2")
-        }
+        imageView.image = UIImage(named: "Picture1")
+
         
         // Add tap gesture to every photo.
         let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(imageTapped(tapGestureRecognizer:)))
@@ -146,6 +144,8 @@ class FirstViewController: UIViewController, UIImagePickerControllerDelegate, UI
     // Image picker delegate.
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         
+        Utilities.presentLoader()
+        
         // Local variable inserted by Swift 4.2 migrator.
         let info = convertFromUIImagePickerControllerInfoKeyDictionary(info)
         
@@ -156,10 +156,7 @@ class FirstViewController: UIViewController, UIImagePickerControllerDelegate, UI
         processButton.isHidden = false
         calculateButton.isHidden = false
         startOverButton.isHidden = false
-        
-        
-        // Show photo in the bordered frame.
-        addBorder(view: tappedImageView)
+
         tappedImageView.image = image
         
         // Determine if a new photo is added or an old one changed and update the number.
@@ -173,17 +170,6 @@ class FirstViewController: UIViewController, UIImagePickerControllerDelegate, UI
         picker.dismiss(animated: true, completion: nil)
     }
     
-    
-    // Border for photos added.
-    private func addBorder(view: UIImageView) {
-//        view.layer.borderWidth = 4
-//        view.layer.borderColor = UIColor.black.cgColor
-        return
-    }
-    
-    private func removeBorder(view: UIImageView) {
-        view.layer.borderWidth = 0
-    }
     
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         picker.dismiss(animated: true, completion: nil)
@@ -227,17 +213,11 @@ class FirstViewController: UIViewController, UIImagePickerControllerDelegate, UI
     }
     
     @objc func image(_ image: UIImage, didFinishSavingWithError error: NSError?, contextInfo: UnsafeRawPointer) {
-        if let error = error {
-            
-            let ac = UIAlertController(title: "Error", message: error.localizedDescription, preferredStyle: .alert)
-            ac.addAction(UIAlertAction(title: "OK", style: .default))
-            present(ac, animated: true)
+        if let _ = error {
+            Utilities.presentError(message: "Save Failed")
             
         } else {
-            
-            let ac = UIAlertController(title: "Success", message: nil, preferredStyle: .alert)
-            ac.addAction(UIAlertAction(title: "OK", style: .default))
-            present(ac, animated: true)
+            Utilities.presentSuccess(message: "Saved")
         }
     }
     
@@ -246,22 +226,23 @@ class FirstViewController: UIViewController, UIImagePickerControllerDelegate, UI
     // Delete certain photo.
     private func removePhoto() {
 
-            
-            self.currentPhotoNum -= 1
-            
-            self.stackView.removeArrangedSubview(self.tappedImageView)
-            self.tappedImageView.removeFromSuperview()
-            
-            // If no photo left, hide buttons.
-            if self.currentPhotoNum == 0 {
-                self.processButton.isHidden = true
-                self.startOverButton.isHidden = true
-                self.calculateButton.isHidden = true
-            }
-            
-            if self.currentPhotoNum == 3 {
-                self.addImageView()
-            }
+        Utilities.presentLoader()
+        
+        self.currentPhotoNum -= 1
+        
+        self.stackView.removeArrangedSubview(self.tappedImageView)
+        self.tappedImageView.removeFromSuperview()
+        
+        // If no photo left, hide buttons.
+        if self.currentPhotoNum == 0 {
+            self.processButton.isHidden = true
+            self.startOverButton.isHidden = true
+            self.calculateButton.isHidden = true
+        }
+        
+        if self.currentPhotoNum == 3 {
+            self.addImageView()
+        }
 
     }
     
@@ -277,8 +258,8 @@ class FirstViewController: UIViewController, UIImagePickerControllerDelegate, UI
         clfConf.removeAll()
         surfaceAreas.removeAll()
         canopySizes.removeAll()
-        
-        
+        clfErr = ""
+        calErr = ""
         
         // Present alert based on tapped button.
         let message = ((sender as! UIButton) == processButton) ? "Use these photos for type identification?" : "Use these photos for size calculation?"
@@ -286,41 +267,26 @@ class FirstViewController: UIViewController, UIImagePickerControllerDelegate, UI
         let alert = UIAlertController(title: nil, message: message, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
         alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { _ in
-            
-            
-            
-            // Find images in stack view and process accordingly.
-            // Keep count of processed photos.
-            var n = 0
-            for subview in self.stackView.arrangedSubviews {
-                
-                // All photos processed.
-                if n == self.currentPhotoNum {
-                    break
-                }
-                
-                // Find image views.
-                if type(of: subview) == UIImageView.self {
-                    
-                    let image = (subview as! UIImageView).image
-                    
-                    if (self.processButton == ((sender as! UIButton))) {
-                        self.classify(image: image!)
-                    } else {
-                        self.calculate(image: image!)
-                    }
-                    
-                    n += 1
-                }
-            }
-            
+
             if (self.processButton == (sender as! UIButton)) {
-                self.performSegue(withIdentifier: "toTreeResults", sender: nil)
+                
+                self.classify()
+                
+                // If classification failed
+                if self.clfErr == "" {
+                    self.performSegue(withIdentifier: "toTreeResults", sender: nil)
+                } else {
+                    Utilities.presentErrorAlert(sender: self, message: self.clfErr)
+                }
             } else {
-                if self.surfaceAreas.count > 0 {
+
+                self.calculate()
+                
+                // Calculation failed
+                if self.calErr == "" {
                     self.performSegue(withIdentifier: "toSizeResults", sender: nil)
                 } else {
-                    self.presentError("Failed to detect text board.\nPlease make sure it is clearly visible, and avoid other texts in photo.")
+                    Utilities.presentErrorAlert(sender: self, message: self.calErr)
                 }
             }
         }))
@@ -330,36 +296,7 @@ class FirstViewController: UIViewController, UIImagePickerControllerDelegate, UI
     
     
     
-    
-    
-    
-    // Remove all current photos.
-    @IBAction func startOver(_ sender: Any) {
-        
-        let ac = UIAlertController(title: "Start Over", message: "Discard all current photos?", preferredStyle: .alert)
-        ac.addAction(UIAlertAction(title: "Cancel", style: .default, handler: nil))
-        ac.addAction(UIAlertAction(title: "Yes", style: .destructive, handler: { _ in
-            
-            self.currentPhotoNum = 0
-            self.processButton.isHidden = true
-            self.startOverButton.isHidden = true
-            self.calculateButton.isHidden = true
-            
-            for subview in self.stackView.arrangedSubviews {
-                if type(of: subview) == UIImageView.self {
-                    self.stackView.removeArrangedSubview(subview)
-                    subview.removeFromSuperview()
-                }
-            }
-            
-            
-            // Add back the initial placeholder.
-            self.addImageView()
-        }))
-        present(ac, animated: true)
-    }
-    
-    
+
     
     
     
@@ -371,35 +308,57 @@ class FirstViewController: UIViewController, UIImagePickerControllerDelegate, UI
     
     // MARK: - Image Classification
     
-    func classify(image: UIImage) {
-        
-        guard let ciImage = CIImage(image: image) else {
-            fatalError("Failed to convert UIImage into CIImage.")
-        }
+    func classify() {
         
         guard let model = try? VNCoreMLModel(for: Tree().model) else {
-            fatalError("Failed to load model.")
+            clfErr = "Model error. Please try again."
+            return
         }
-
         
-        let request = VNCoreMLRequest(model: model) { (request, error) in
-            guard let results = request.results as? [VNClassificationObservation] else {
-                fatalError("Failed to load results.")
+        // Find images in stack view and process accordingly.
+        // Keep count of processed photos.
+        var n = 0
+        for subview in self.stackView.arrangedSubviews {
+            
+            // All photos processed.
+            if n == self.currentPhotoNum {
+                break
             }
             
-            if let topResult = results.first {
-                self.clfLabel.append(topResult.identifier)
-                self.clfConf.append(topResult.confidence)
+            // Find image views.
+            if type(of: subview) == UIImageView.self {
+                
+                n += 1
+                
+                let image = (subview as! UIImageView).image
+                    
+                guard let ciImage = CIImage(image: image!) else {
+                    clfErr = "The image has no CIImage backing it."
+                    return
+                }
+        
+                let request = VNCoreMLRequest(model: model) { (request, error) in
+                    guard let results = request.results as? [VNClassificationObservation] else {
+                        self.clfErr = "Observation error. Please try again."
+                        return
+                    }
+                    
+                    if let topResult = results.first {
+                        self.clfLabel.append(topResult.identifier)
+                        self.clfConf.append(topResult.confidence)
+                    }
+                }
+                
+                let handler = VNImageRequestHandler(ciImage: ciImage)
+                
+                do {
+                    try handler.perform([request])
+                }
+                catch {
+                    clfErr = error.localizedDescription
+                    return
+                }
             }
-        }
-        
-        let handler = VNImageRequestHandler(ciImage: ciImage)
-        
-        do {
-            try handler.perform([request])
-        }
-        catch {
-            self.presentError(error.localizedDescription + "\nPlease try again.")
         }
     }
     
@@ -415,64 +374,85 @@ class FirstViewController: UIViewController, UIImagePickerControllerDelegate, UI
     
     // Mark: - Size Calculation
 
-    
-    func calculate(image: UIImage) {
+    func calculate() {
+        var n = 0
+        for subview in self.stackView.arrangedSubviews {
         
-        // Convert from UIImageOrientation to CGImagePropertyOrientation.
-        let cgOrientation = CGImagePropertyOrientation(image.imageOrientation)
-        
-        guard let cgImage = image.cgImage else {
-            fatalError("The image has no CGImage.")
-        }
-        
-        let request = VNDetectTextRectanglesRequest(completionHandler: { (request, error) in
-            
-            guard let results = request.results as? [VNTextObservation] else {
-                fatalError("VN text observation error.")
+            if n == self.currentPhotoNum {
+                break
             }
             
-            // Make sure there is only one text observation with 5 characters - "ThREE".
-       
-            var count = 0
-            var targetObservation: VNTextObservation?
-            for result in results {
-                if let n = result.characterBoxes?.count {
-              
-                    if n == 5 {
-                        count += 1
-                        targetObservation = result
+            if type(of: subview) == UIImageView.self {
+                
+                n += 1
+                let image = (subview as! UIImageView).image
+                
+                // Convert from UIImageOrientation to CGImagePropertyOrientation.
+                let cgOrientation = CGImagePropertyOrientation(image!.imageOrientation)
+                
+                guard let cgImage = image!.cgImage else {
+                    calErr = "No CIImage"
+                    return
+                }
+                
+                let request = VNDetectTextRectanglesRequest(completionHandler: { (request, error) in
+                    
+                    guard let results = request.results as? [VNTextObservation] else {
+                        self.calErr = "Observation error. Please try again."
+                        return
                     }
+                    
+                    // Make sure there is only one text observation with 5 characters - "ThREE".
+                    
+                    var count = 0
+                    var targetObservation: VNTextObservation?
+                    for result in results {
+                        if let n = result.characterBoxes?.count {
+                            
+                            if n == 5 {
+                                count += 1
+                                targetObservation = result
+                            }
+                        }
+                    }
+                    if count != 1 {
+                        self.calErr = "Failed to detect text board. Please make sure it is clearly visible. Avoid other texts in photo."
+                        return
+                    }
+                    
+                    // Get text observation bounding and scale.
+                    if let box = targetObservation?.boundingBox {
+                        
+                        // Image size in metres.
+                        let imageWidthInMeters = self.boardWidth / box.size.width
+                        let imageHeightInMeters = self.boardHeight / box.size.height
+                        
+                        let (area, size) = self.calculateAreaAndSize(image: cgImage, width: imageWidthInMeters, height: imageHeightInMeters)
+                        
+                        self.canopySizes.append(size)
+                        self.surfaceAreas.append(area)
+                    }
+                })
+                request.reportCharacterBoxes = true
+                
+                let handler = VNImageRequestHandler(cgImage: cgImage, orientation: cgOrientation)
+                
+                do {
+                    try handler.perform([request])
+                }
+                catch {
+                    calErr = "Image detection error. Please try again."
+                    return
                 }
             }
-            if count != 1 { return }
-            
-            // Get text observation bounding and scale.
-            if let box = targetObservation?.boundingBox {
-                
-                // Image size in metres.
-                let imageWidthInMeters = self.boardWidth / box.size.width
-                let imageHeightInMeters = self.boardHeight / box.size.height
-                
-                let (area, size) = self.calculateAreaAndSize(image: cgImage, width: imageWidthInMeters, height: imageHeightInMeters)
-                
-                self.canopySizes.append(size)
-                self.surfaceAreas.append(area)
-            }
-        })
-        request.reportCharacterBoxes = true
-        
-        let handler = VNImageRequestHandler(cgImage: cgImage, orientation: cgOrientation)
-        
-        do {
-            try handler.perform([request])
-        }
-        catch {
-            self.presentError(error.localizedDescription + "\nPlease try again.")
         }
     }
     
+        
+    
+    
     // Calculate area and size.
-    // The shape of tree assumed to be a cylinder for each row of pixels.
+    // The shape of tree assumed to be a cylinder for each row of green pixels.
     private func calculateAreaAndSize(image: CGImage, width: CGFloat, height: CGFloat) -> (CGFloat, CGFloat) {
         
         let pixelData = image.dataProvider?.data
@@ -573,25 +553,6 @@ class FirstViewController: UIViewController, UIImagePickerControllerDelegate, UI
     
     
     
-    private func presentError(_ message: String) {
-        let ac = UIAlertController(title: "Error", message: message, preferredStyle: .alert)
-        ac.addAction(UIAlertAction(title: "OK", style: .destructive, handler: nil))
-        present(ac, animated: true)
-    }
-    
-    private func getAvg(array: [CGFloat]) -> CGFloat {
-        var sum = CGFloat(0)
-        for element in array {
-            sum += element
-        }
-        return sum/CGFloat(array.count)
-    }
-
-    
-    
-    
-    
-    
     
     // Prepare for result segues.
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -617,7 +578,7 @@ class FirstViewController: UIViewController, UIImagePickerControllerDelegate, UI
                     if maxConf > 2.0/3.0 {
                         vc.confColor = UIColor.blue
                     } else if maxConf > 1.0/3.0 {
-                        vc.confColor = UIColor.orange
+                        vc.confColor = UIColor.purple
                     } else {
                         vc.confColor = UIColor(red: 128/255, green: 0, blue: 0, alpha: 1)
                     }
@@ -630,15 +591,58 @@ class FirstViewController: UIViewController, UIImagePickerControllerDelegate, UI
         if segue.identifier == "toSizeResults" {
             let vc = (segue.destination as! UINavigationController).topViewController as! TreeSizeResultsViewController
             
+            func getAvg(_ a: [CGFloat]) -> CGFloat {
+                var sum = CGFloat(0)
+                for el in a {
+                    sum += el
+                }
+                return sum/CGFloat(a.count)
+            }
+            
             // Average over all photos.
-            let avgArea = getAvg(array: surfaceAreas)
-            let avgSize = getAvg(array: canopySizes)
+            let avgArea = getAvg(surfaceAreas)
+            let avgSize = getAvg(canopySizes)
             let water = (avgArea / 4 / CGFloat.pi).squareRoot() * 2 * trunkCanopyRatio * meterInchRatio * 10 * gallonLiterRatio
             vc.areaText = String(Int(avgArea)) + " m²"
             vc.sizeText = String(Int(avgSize)) + " m³"
             vc.waterText = String(Int(water)) + " L p/w"
         }
     }
+    
+    
+    
+    
+    
+    
+    
+    // Remove all current photos.
+    @IBAction func startOver(_ sender: Any) {
+        
+        let ac = UIAlertController(title: "Start Over", message: "Discard all current photos?", preferredStyle: .alert)
+        ac.addAction(UIAlertAction(title: "Cancel", style: .default, handler: nil))
+        ac.addAction(UIAlertAction(title: "Yes", style: .destructive, handler: { _ in
+            
+            Utilities.presentLoader()
+            self.currentPhotoNum = 0
+            self.processButton.isHidden = true
+            self.startOverButton.isHidden = true
+            self.calculateButton.isHidden = true
+            
+            for subview in self.stackView.arrangedSubviews {
+                if type(of: subview) == UIImageView.self {
+                    self.stackView.removeArrangedSubview(subview)
+                    subview.removeFromSuperview()
+                }
+            }
+            
+            
+            // Add back the initial placeholder.
+            self.addImageView()
+        }))
+        present(ac, animated: true)
+    }
+    
+    
     
     
 }

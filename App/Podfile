@@ -7,7 +7,7 @@ target 'App' do
 
   # Pods for App
   # [START base_dependencies]
-
+	pod "KRProgressHUD"
   # [END base_dependencies]
 
 

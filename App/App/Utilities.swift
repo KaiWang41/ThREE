@@ -7,23 +7,43 @@
 //
 
 import UIKit
+import KRProgressHUD
 
 class Utilities: NSObject {
 
-    static func presentAlert(for vc: UIViewController, type: String, message: String) {
-        
-        let title = (type == "error") ? "Error" : ""
-        let ac = UIAlertController(title: title, message: message, preferredStyle: .alert)
-        
-        switch type {
-        case "error":
-            ac.addAction(UIAlertAction(title: "OK", style: .destructive, handler: nil))
-        case "info":
-            ac.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-        default:
-            ()
+    static func presentError(message: String) {
+        if message != "" {
+            KRProgressHUD.showError(withMessage: message)
+        } else {
+            KRProgressHUD.showError()
         }
-        
-        vc.present(ac, animated: true)
+        DispatchQueue.main.asyncAfter(deadline: .now() + 4) {
+            KRProgressHUD.dismiss()
+        }
     }
+    
+    static func presentSuccess(message: String) {
+        if message != "" {
+            KRProgressHUD.showSuccess(withMessage: message)
+        } else {
+            KRProgressHUD.showSuccess()
+        }
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+            KRProgressHUD.dismiss()
+        }
+    }
+    
+    static func presentLoader() {
+        KRProgressHUD.show()
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+            KRProgressHUD.dismiss()
+        }
+    }
+    
+    static func presentErrorAlert(sender: UIViewController, message: String) {
+        let ac = UIAlertController(title: "Error", message: message, preferredStyle: .alert)
+        ac.addAction(UIAlertAction(title: "OK", style: .destructive, handler: nil))
+        sender.present(ac, animated: true)
+    }
+
 }

@@ -35,10 +35,7 @@ class TreeSizeResultsViewController: UIViewController {
     
     
     @IBAction func onSave(_ sender: Any) {
-        let ac = UIAlertController(title: nil, message: "Save to library?", preferredStyle: .alert)
-        ac.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
-        ac.addAction(UIAlertAction(title: "Yes", style: .default, handler: { alert in
-            
+        
             let renderer = UIGraphicsImageRenderer(size: self.stackView.bounds.size)
             let image = renderer.image { ctx in
                 self.stackView.drawHierarchy(in: self.stackView.bounds, afterScreenUpdates: true)
@@ -47,24 +44,17 @@ class TreeSizeResultsViewController: UIViewController {
             UIImageWriteToSavedPhotosAlbum(image, self, #selector(self.image(_:didFinishSavingWithError:contextInfo:)), nil)
             
             self.resultsSaved = true
-        }))
-        
-        present(ac, animated: true)
+
     }
     
     @objc func image(_ image: UIImage, didFinishSavingWithError error: NSError?, contextInfo info: UnsafeRawPointer) {
         
-        if let error = error {
+        if let _ = error {
             
-            let ac = UIAlertController(title: "Error", message: error.localizedDescription, preferredStyle: .alert)
-            ac.addAction(UIAlertAction(title: "OK", style: .default))
-            present(ac, animated: true)
+            Utilities.presentError(message: "Save Error")
             
         } else {
-            
-            let ac = UIAlertController(title: "Success", message: nil, preferredStyle: .alert)
-            ac.addAction(UIAlertAction(title: "OK", style: .default))
-            present(ac, animated: true)
+            Utilities.presentSuccess(message: "Saved")
         }
     }
     
