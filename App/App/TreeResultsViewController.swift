@@ -66,9 +66,7 @@ class TreeResultsViewController: UIViewController {
             }
             
             UIImageWriteToSavedPhotosAlbum(image, self, #selector(self.image(_:didFinishSavingWithError:contextInfo:)), nil)
-            
-            self.resultsSaved = true
-    
+        
     }
     
     @objc func image(_ image: UIImage, didFinishSavingWithError error: NSError?, contextInfo info: UnsafeRawPointer) {
@@ -79,6 +77,7 @@ class TreeResultsViewController: UIViewController {
             
         } else {
             Utilities.presentSuccess(message: "Saved")
+            self.resultsSaved = true
         }
     }
     

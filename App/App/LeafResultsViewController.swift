@@ -70,8 +70,7 @@ class LeafResultsViewController: UIViewController {
             }
             
             UIImageWriteToSavedPhotosAlbum(image, self, #selector(self.image(_:didFinishSavingWithError:contextInfo:)), nil)
-            
-            self.resultsSaved = true
+
     }
     
     
@@ -84,6 +83,7 @@ class LeafResultsViewController: UIViewController {
             
         } else {
             Utilities.presentSuccess(message: "Saved")
+            self.resultsSaved = true
         }
     }
     

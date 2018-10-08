@@ -42,8 +42,7 @@ class TreeSizeResultsViewController: UIViewController {
             }
             
             UIImageWriteToSavedPhotosAlbum(image, self, #selector(self.image(_:didFinishSavingWithError:contextInfo:)), nil)
-            
-            self.resultsSaved = true
+
 
     }
     
@@ -55,6 +54,8 @@ class TreeSizeResultsViewController: UIViewController {
             
         } else {
             Utilities.presentSuccess(message: "Saved")
+            
+            self.resultsSaved = true
         }
     }
     
