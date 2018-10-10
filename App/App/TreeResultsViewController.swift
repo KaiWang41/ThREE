@@ -39,7 +39,7 @@ class TreeResultsViewController: UIViewController {
         
         // Common names
         switch typeText {
-        case "planatus":
+        case "platanus":
             typeLabel.text = "Plane Tree"
         case "ulmus":
             typeLabel.text = "Elm Tree"

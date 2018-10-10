@@ -402,14 +402,14 @@ class FirstViewController: UIViewController, UIImagePickerControllerDelegate, UI
                         return
                     }
                     
-                    // Make sure there is only one text observation with 5 characters - "ThREE".
+                    // Make sure there is only one text observation with 4 characters - "TREE".
                     
                     var count = 0
                     var targetObservation: VNTextObservation?
                     for result in results {
                         if let n = result.characterBoxes?.count {
                             
-                            if n == 5 {
+                            if n == 4 {
                                 count += 1
                                 targetObservation = result
                             }
