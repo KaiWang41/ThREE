@@ -45,8 +45,8 @@ class FirstViewController: UIViewController, UIImagePickerControllerDelegate, UI
     var calErr = ""
     
     // Text board size in metres.
-    let boardWidth: CGFloat = 1.1
-    let boardHeight: CGFloat = 0.3
+    let boardWidth: CGFloat = 0.733
+    let boardHeight: CGFloat = 0.252
     
 
     override func viewDidLoad() {
