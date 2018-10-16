@@ -10,7 +10,7 @@ import UIKit
 
 class TreeSizeResultsViewController: UIViewController {
 
-    
+    @IBOutlet weak var lengthLabel: UILabel!
     @IBOutlet weak var areaLabel: UILabel!
     @IBOutlet weak var sizeLabel: UILabel!
     @IBOutlet weak var waterLabel: UILabel!
@@ -18,12 +18,14 @@ class TreeSizeResultsViewController: UIViewController {
     
     
     var resultsSaved = false
-    var areaText = ""
-    var sizeText = ""
-    var waterText = ""
+    var lengthText = "3.4 m × 3.7 m"
+    var areaText = "35 m²"
+    var sizeText = "69 m³"
+    var waterText = "72 L"
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
+        lengthLabel.text = lengthText
         areaLabel.text = areaText
         sizeLabel.text = sizeText
         waterLabel.text = waterText

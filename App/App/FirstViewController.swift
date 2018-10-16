@@ -37,6 +37,8 @@ class FirstViewController: UIViewController, UIImagePickerControllerDelegate, UI
     var clfErr = ""
     
     // Size calculation.
+    var canopyHeight = -CGFloat.infinity
+    var canopyDiameter = -CGFloat.infinity
     var surfaceAreas = [CGFloat]()
     var canopySizes = [CGFloat]()
     let trunkCanopyRatio = CGFloat(0.045)
@@ -256,13 +258,15 @@ class FirstViewController: UIViewController, UIImagePickerControllerDelegate, UI
         // Clear previous results
         clfLabel.removeAll()
         clfConf.removeAll()
+        canopyHeight = -CGFloat.infinity
+        canopyDiameter = -CGFloat.infinity
         surfaceAreas.removeAll()
         canopySizes.removeAll()
         clfErr = ""
         calErr = ""
         
         // Present alert based on tapped button.
-        let message = ((sender as! UIButton) == processButton) ? "Use these photos for type identification?" : "Use these photos for size calculation?"
+        let message = ((sender as! UIButton) == processButton) ? "Use these photos for type identification?" : "Use these photos for canopy volume calculation?"
         
         let alert = UIAlertController(title: nil, message: message, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
@@ -415,8 +419,11 @@ class FirstViewController: UIViewController, UIImagePickerControllerDelegate, UI
                             }
                         }
                     }
+                    
+                    // If not only 1 observation found
                     if count != 1 {
-                        self.calErr = "Failed to detect text board. Please make sure it is clearly visible. Avoid other texts in photo."
+                        self.calErr = "Failed to detect text board in Image " + String(n) +
+                            ".\nPlease make sure it is facing the camera and avoid other texts in photo."
                         return
                     }
                     
@@ -427,8 +434,12 @@ class FirstViewController: UIViewController, UIImagePickerControllerDelegate, UI
                         let imageWidthInMeters = self.boardWidth / box.size.width
                         let imageHeightInMeters = self.boardHeight / box.size.height
                         
-                        let (area, size) = self.calculateAreaAndSize(image: cgImage, width: imageWidthInMeters, height: imageHeightInMeters)
+                        let (height, area, size) = self.calculateAreaAndSize(image: cgImage, width: imageWidthInMeters, height: imageHeightInMeters)
                         
+                        if height > self.canopyHeight {
+                            self.canopyHeight = height
+                        }
+
                         self.canopySizes.append(size)
                         self.surfaceAreas.append(area)
                     }
@@ -453,30 +464,37 @@ class FirstViewController: UIViewController, UIImagePickerControllerDelegate, UI
     
     // Calculate area and size.
     // The shape of tree assumed to be a cylinder for each row of green pixels.
-    private func calculateAreaAndSize(image: CGImage, width: CGFloat, height: CGFloat) -> (CGFloat, CGFloat) {
+    private func calculateAreaAndSize(image: CGImage, width: CGFloat, height: CGFloat) -> (CGFloat, CGFloat, CGFloat) {
         
         let pixelData = image.dataProvider?.data
         let data: UnsafePointer<UInt8> = CFDataGetBytePtr(pixelData)
         
-        // Determine if a pixel is green.
-        func isGreen(x: Int, y: Int) -> Bool {
+        // Function determining if a pixel is green.
+        func isGreen(_ x: Int, _ y: Int) -> Bool {
             
             let pixelInfo: Int = (image.width * y + x) * 4
-            let red = data[pixelInfo]
-            let green = data[pixelInfo + 1]
-            let blue = data[pixelInfo + 2]
+            let red = Int(data[pixelInfo])
+            let green = Int(data[pixelInfo + 1])
+            let blue = Int(data[pixelInfo + 2])
             
-            if (green >= 20) && (red < 140) && (red < green) && (blue < green/2) {
+            // Criteria for "green" in RGB
+            if (green >= 20) && (red < green + 25) && (blue < green*4/5) {
                 return true
             } else {
                 return false
             }
         }
         
+        // Pixel height in meters.
+        let pixelHeight = (CGFloat(1) / CGFloat(image.height)) * height
+        
         var area: CGFloat = 0
         var size: CGFloat = 0
         
         // Count green pixels for each row.
+        
+        // Height of canopy.
+        var heightPixelCount = 0
         
         for y in 0..<image.height {
             
@@ -484,71 +502,81 @@ class FirstViewController: UIViewController, UIImagePickerControllerDelegate, UI
             for x in 0..<image.width {
                 
                 // If a green pixel is not adjacent to any other green one, it is not included.
-                var isLeaf = false
-                if isGreen(x: x, y: y) {
-                    
-                    // Same column.
-                    if y >= 1 {
-                        if isGreen(x: x, y: y-1) {
-                            // Found adjacent green.
-                            isLeaf = true
-                        }
-                    }
-                    if y+1 < image.height {
-                        if isGreen(x: x, y: y+1) {
-                            isLeaf = true
-                        }
-                    }
-                    
-                    
-                    // Left column.
-                    if x >= 1 {
-                        if isGreen(x: x-1, y: y) {
-                            isLeaf = true
-                        }
-                        if y >= 1 {
-                            if isGreen(x: x-1, y: y-1) {
-                                isLeaf = true
-                            }
-                        }
-                        if y+1 < image.height {
-                            if isGreen(x: x-1, y: y+1) {
-                                isLeaf = true
-                            }
-                        }
-                    }
-                    
-                    // Right column.
-                    if x+1 < image.width {
-                        if isGreen(x: x+1, y: y) {
-                            isLeaf = true
-                        }
-                        if y >= 1 {
-                            if isGreen(x: x+1, y: y-1) {
-                                isLeaf = true
-                            }
-                        }
-                        if y+1 < image.height {
-                            if isGreen(x: x+1, y: y+1) {
-                                isLeaf = true
-                            }
-                        }
-                    }
-                }
+//                var isLeaf = false
+//                if isGreen(x: x, y: y) {
+//
+//                    // Same column.
+//                    if y >= 1 {
+//                        if isGreen(x: x, y: y-1) {
+//                            // Found adjacent green.
+//                            isLeaf = true
+//                        }
+//                    }
+//                    if y+1 < image.height {
+//                        if isGreen(x: x, y: y+1) {
+//                            isLeaf = true
+//                        }
+//                    }
+//
+//
+//                    // Left column.
+//                    if x >= 1 {
+//                        if isGreen(x: x-1, y: y) {
+//                            isLeaf = true
+//                        }
+//                        if y >= 1 {
+//                            if isGreen(x: x-1, y: y-1) {
+//                                isLeaf = true
+//                            }
+//                        }
+//                        if y+1 < image.height {
+//                            if isGreen(x: x-1, y: y+1) {
+//                                isLeaf = true
+//                            }
+//                        }
+//                    }
+//
+//                    // Right column.
+//                    if x+1 < image.width {
+//                        if isGreen(x: x+1, y: y) {
+//                            isLeaf = true
+//                        }
+//                        if y >= 1 {
+//                            if isGreen(x: x+1, y: y-1) {
+//                                isLeaf = true
+//                            }
+//                        }
+//                        if y+1 < image.height {
+//                            if isGreen(x: x+1, y: y+1) {
+//                                isLeaf = true
+//                            }
+//                        }
+//                    }
+//                }
                 
-                if isLeaf {
+                if isGreen(x, y) {
                     count += 1
                 }
             }
             
+            if count > 0 {
+                heightPixelCount += 1
+            }
+            
             // Calculation.
             let diameter = (CGFloat(count) / CGFloat(image.width)) * width
-            let pixelHeight = (CGFloat(1) / CGFloat(image.height)) * height
+            
+            if self.canopyDiameter < diameter {
+                self.canopyDiameter = diameter
+            }
+            
             size += CGFloat.pi * diameter * diameter / 4 * pixelHeight
             area += CGFloat.pi * diameter * pixelHeight
         }
         
-        return (area, size)
+        let canopyHeight = CGFloat(heightPixelCount) * pixelHeight
+        
+        return (canopyHeight, area, size)
     }
     
     
@@ -602,10 +630,16 @@ class FirstViewController: UIViewController, UIImagePickerControllerDelegate, UI
             // Average over all photos.
             let avgArea = getAvg(surfaceAreas)
             let avgSize = getAvg(canopySizes)
-            let water = (avgArea / 4 / CGFloat.pi).squareRoot() * 2 * trunkCanopyRatio * meterInchRatio * 10 * gallonLiterRatio
-            vc.areaText = String(Int(avgArea)) + " m²"
-            vc.sizeText = String(Int(avgSize)) + " m³"
-            vc.waterText = String(Int(water)) + " L p/w"
+            let water = self.canopyDiameter * trunkCanopyRatio * meterInchRatio * 10 * gallonLiterRatio
+            
+            if avgArea > 0, avgSize > 0, self.canopyDiameter > 0, self.canopyHeight > 0 {
+                
+                vc.lengthText = String(format: "%.1f m × %.1f m", self.canopyDiameter, self.canopyHeight)
+                vc.areaText = String(Int(avgArea)) + " m²"
+                vc.sizeText = String(Int(avgSize)) + " m³"
+                vc.waterText = String(Int(water)) + " L"
+            }
+            
         }
     }
     
