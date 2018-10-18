@@ -503,17 +503,17 @@ class FirstViewController: UIViewController, UIImagePickerControllerDelegate, UI
                 
                 // If a green pixel is not adjacent to any other green one, it is not included.
 //                var isLeaf = false
-//                if isGreen(x: x, y: y) {
+//                if isGreen(x, y) {
 //
 //                    // Same column.
 //                    if y >= 1 {
-//                        if isGreen(x: x, y: y-1) {
+//                        if isGreen(x, y-1) {
 //                            // Found adjacent green.
 //                            isLeaf = true
 //                        }
 //                    }
 //                    if y+1 < image.height {
-//                        if isGreen(x: x, y: y+1) {
+//                        if isGreen(x, y+1) {
 //                            isLeaf = true
 //                        }
 //                    }
@@ -521,16 +521,16 @@ class FirstViewController: UIViewController, UIImagePickerControllerDelegate, UI
 //
 //                    // Left column.
 //                    if x >= 1 {
-//                        if isGreen(x: x-1, y: y) {
+//                        if isGreen(x-1, y) {
 //                            isLeaf = true
 //                        }
 //                        if y >= 1 {
-//                            if isGreen(x: x-1, y: y-1) {
+//                            if isGreen(x-1, y-1) {
 //                                isLeaf = true
 //                            }
 //                        }
 //                        if y+1 < image.height {
-//                            if isGreen(x: x-1, y: y+1) {
+//                            if isGreen(x-1, y+1) {
 //                                isLeaf = true
 //                            }
 //                        }
@@ -538,16 +538,16 @@ class FirstViewController: UIViewController, UIImagePickerControllerDelegate, UI
 //
 //                    // Right column.
 //                    if x+1 < image.width {
-//                        if isGreen(x: x+1, y: y) {
+//                        if isGreen(x+1, y) {
 //                            isLeaf = true
 //                        }
 //                        if y >= 1 {
-//                            if isGreen(x: x+1, y: y-1) {
+//                            if isGreen(x+1, y-1) {
 //                                isLeaf = true
 //                            }
 //                        }
 //                        if y+1 < image.height {
-//                            if isGreen(x: x+1, y: y+1) {
+//                            if isGreen(x+1, y+1) {
 //                                isLeaf = true
 //                            }
 //                        }
@@ -635,9 +635,9 @@ class FirstViewController: UIViewController, UIImagePickerControllerDelegate, UI
             if avgArea > 0, avgSize > 0, self.canopyDiameter > 0, self.canopyHeight > 0 {
                 
                 vc.lengthText = String(format: "%.1f m × %.1f m", self.canopyDiameter, self.canopyHeight)
-                vc.areaText = String(Int(avgArea)) + " m²"
-                vc.sizeText = String(Int(avgSize)) + " m³"
-                vc.waterText = String(Int(water)) + " L"
+                vc.areaText = String(format: "%.1f m²", avgArea)
+                vc.sizeText = String(format: "%.1f m³", avgSize)
+                vc.waterText = String(format: "%.1f L", water)
             }
             
         }
