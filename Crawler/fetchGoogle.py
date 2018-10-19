@@ -16,7 +16,7 @@ ROOT_DIR = os.path.dirname(os.path.abspath(__file__))
 # get tree type name
 
 
-list_of_tree_type = []
+list_of_tree_type = ['Acacia','Allocasuarina','Angophora','Corymbia','Eucalyptus','Ficus','Melaleuca','platanus','Quercus','Ulmus']
 
 req = Request("http://www.johnfrenchlandscapes.com.au/common-trees-in-melbourne/", headers={'User-Agent': 'Mozilla/5.0'})
 html = urlopen(req).read()
