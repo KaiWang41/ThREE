@@ -406,14 +406,13 @@ Unicode: U+00B3, UTF-8: C2 B3</string>
                                                                     <constraint firstAttribute="width" constant="32" id="X3S-B8-OEG"/>
                                                                 </constraints>
                                                             </imageView>
-                                                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" editable="NO" textAlignment="center" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ygo-t6-F9X">
+                                                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" editable="NO" text="Supply photos of the whole tree to ID its type, or estimate its canopy volume and water need. Make sure to check out the" textAlignment="center" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ygo-t6-F9X">
                                                                 <rect key="frame" x="15" y="36" width="258.66666666666669" height="83"/>
                                                                 <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                                                                 <constraints>
                                                                     <constraint firstAttribute="height" constant="83" id="R3h-3p-OHy"/>
                                                                     <constraint firstAttribute="width" constant="258.5" id="p6z-EG-gMw"/>
                                                                 </constraints>
-                                                                <string key="text">Supply photos of the whole tree to ID its type or to callculate its canopy size and water consumption. Make sure to check out the</string>
                                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                                             </textView>

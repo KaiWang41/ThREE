@@ -409,23 +409,27 @@ class FirstViewController: UIViewController, UIImagePickerControllerDelegate, UI
                     // Make sure there is only one text observation with 4 characters - "TREE".
                     
                     var count = 0
+                    var maxHeight = -CGFloat.infinity
                     var targetObservation: VNTextObservation?
                     for result in results {
                         if let n = result.characterBoxes?.count {
                             
                             if n == 4 {
                                 count += 1
-                                targetObservation = result
+                                if result.boundingBox.size.height > maxHeight {
+                                    targetObservation = result
+                                    maxHeight = result.boundingBox.size.height
+                                }
                             }
                         }
                     }
                     
-                    // If not only 1 observation found
-                    if count != 1 {
-                        self.calErr = "Failed to detect text board in Image " + String(n) +
-                            ".\nPlease make sure it is facing the camera and avoid other texts in photo."
-                        return
-                    }
+//                    // If not only 1 observation found
+//                    if count != 1 {
+//                        self.calErr = "Failed to detect text board in Image " + String(n) +
+//                            ".\nPlease make sure it is directly facing the camera."
+//                        return
+//                    }
                     
                     // Get text observation bounding and scale.
                     if let box = targetObservation?.boundingBox {
@@ -478,7 +482,7 @@ class FirstViewController: UIViewController, UIImagePickerControllerDelegate, UI
             let blue = Int(data[pixelInfo + 2])
             
             // Criteria for "green" in RGB
-            if (green >= 20) && (red < green + 25) && (blue < green*4/5) {
+            if (green >= 20) && (red < green*4/5) && (blue < green*7/10) {
                 return true
             } else {
                 return false
@@ -635,9 +639,9 @@ class FirstViewController: UIViewController, UIImagePickerControllerDelegate, UI
             if avgArea > 0, avgSize > 0, self.canopyDiameter > 0, self.canopyHeight > 0 {
                 
                 vc.lengthText = String(format: "%.1f m × %.1f m", self.canopyDiameter, self.canopyHeight)
-                vc.areaText = String(format: "%.1f m²", avgArea)
-                vc.sizeText = String(format: "%.1f m³", avgSize)
-                vc.waterText = String(format: "%.1f L", water)
+                vc.areaText = String(format: "%.0f m²", avgArea)
+                vc.sizeText = String(format: "%.0f m³", avgSize)
+                vc.waterText = String(format: "%.0f L", water)
             }
             
         }
